@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quản lý phiếu mượn - Thư viện Đại học Công nghiệp</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 20px;
+        }
+        .header {
+            background-color: #007bff;
+            color: white;
+            padding: 10px;
+            text-align: center;
+            border-radius: 5px;
+            position: relative;
+        }
+        .header h1 {
+            margin: 0;
+        }
+        .profile {
+            position: absolute;
+            right: 20px;
+            top: 10px;
+            display: flex;
+            align-items: center;
+        }
+        .profile span {
+            margin-right: 10px;
+            font-weight: bold;
+        }
+        .profile button {
+            padding: 5px 10px;
+            background-color: #fff;
+            color: #007bff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .profile button:hover {
+            background-color: #e6e6e6;
+        }
+        .table-container {
+            margin-top: 20px;
+            background-color: white;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            padding: 10px;
+            border: 1px solid #ccc;
+            text-align: left;
+        }
+        th {
+            background-color: #007bff;
+            color: white;
+        }
+        .btn-tra {
+            background-color: #28a745;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .modal {
+            display: none; 
+            position: fixed; 
+            z-index: 1; 
+            left: 0;
+            top: 0;
+            width: 100%; 
+            height: 100%; 
+            overflow: auto; 
+            background-color: rgba(0,0,0,0.4);
+            padding-top: 100px;
+        }
+        .modal-content {
+            background-color: #fefefe;
+            margin: 5% auto; 
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%; 
+            text-align: center;
+        }
+        .modal-content button {
+            margin: 5px;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .btn-dongy {
+            background-color: #007bff;
+            color: white;
+        }
+        .btn-khong {
+            background-color: #6c757d;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Thư viện Đại học Công nghiệp</h1>
+        <div class="profile">
+            <span>Thủ thư A</span>
+            <button onclick="logout()">Đăng xuất</button>
+        </div>
+    </div>
+    <div class="table-container">
+        <h2>Quản lý phiếu mượn</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Mã phiếu mượn</th>
+                    <th>Thời hạn</th>
+                    <th>Trạng thái</th>
+                    <th>Số lượng mượn</th>
+                    <th>Mã người dùng</th>
+                    <th>Mã sách</th>
+                    <th>Trạng thái</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>PM1</td>
+                    <td>04/11/2024</td>
+                    <td>Chưa trả</td>
+                    <td>1</td>
+                    <td>ND1</td>
+                    <td>MS1</td>
+                    <td><button class="btn-tra" onclick="openModal()">Trả sách</button></td>
+                </tr>
+                <tr>
+                    <td>PM2</td>
+                    <td>30/11/2024</td>
+                    <td>Chưa trả</td>
+                    <td>2</td>
+                    <td>ND2</td>
+                    <td>MS2</td>
+                    <td><button class="btn-tra" onclick="openModal()">Trả sách</button></td>
+                </tr>
+                <tr>
+                    <td>PM3</td>
+                    <td>15/12/2024</td>
+                    <td>Chưa trả</td>
+                    <td>1</td>
+                    <td>ND3</td>
+                    <td>MS3</td>
+                    <td><button class="btn-tra" onclick="openModal()">Trả sách</button></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div id="myModal" class="modal">
+        <div class="modal-content">
+            <p>Đồng ý trả sách?</p>
+            <button class="btn-dongy" onclick="confirmReturn()">Đồng ý</button>
+            <button class="btn-khong" onclick="closeModal()">Không đồng ý</button>
+        </div>
+    </div>
+
+    <script>
+        function logout() {
+            alert("Đăng xuất thành công!");
+        }
+
+        function openModal() {
+            document.getElementById("myModal").style.display = "block";
+        }
+
+        function closeModal() {
+            document.getElementById("myModal").style.display = "none";
+        }
+
+        function confirmReturn() {
+            alert("Sách đã được trả thành công!");
+            closeModal();
+        }
+
+        // Đóng modal khi nhấn ra ngoài
+        window.onclick = function(event) {
+            if (event.target == document.getElementById("myModal")) {
+                closeModal();
+            }
+        }
+    </script>
+</body>
+</html>

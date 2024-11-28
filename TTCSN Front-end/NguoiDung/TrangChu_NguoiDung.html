@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thư viện Trường Đại học Công nghiệp Hà Nội</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&family=Lora:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: aliceblue;
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Header */
+        .header {
+            background-color:azure;
+            color: darkslateblue;
+            padding: 20px;
+            
+            text-align: center;
+            position: relative;
+            
+        }
+        .header img {
+            width: 30%; /* Giảm kích thước ảnh */
+            max-width: 300px; /* Đặt kích thước tối đa */
+            vertical-align: middle;
+        }
+        .header h1 {
+            display: inline;
+            margin-left: 10px;
+            vertical-align: middle;
+        }
+        .header .profile {
+            position: absolute;
+            right: 20px;
+            top: 20px;
+        }
+        .header .profile img {
+            width: 30px;
+            vertical-align: middle;
+        }
+        .header .profile span {
+            margin-left: 10px;
+            vertical-align: middle;
+        }
+        .header button {
+            background-color: #0056b3;
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        .header button:hover {
+            background-color: #003f8b;
+        }
+
+        /* Navigation Bar */
+        .nav {
+            background-color: #003f8b;
+            overflow: hidden;
+            
+            margin: 0 20px; /* Khoảng cách 20px ở hai bên */
+            border-radius: 8px; /* Bo góc cho thanh điều hướng */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Thêm bóng đổ */
+        }
+
+        .nav a {
+            float: left;
+            display: block;
+            color: white;
+            text-align: center;
+            padding: 15px 20px; /* Tăng padding cho các liên kết */
+            text-decoration: none;
+            transition: background-color 0.3s, transform 0.3s; /* Hiệu ứng chuyển động */
+        }
+
+        .nav a:hover {
+            background-color: #0056b3; /* Màu nền khi hover */
+            transform: scale(1.05); /* Tăng kích thước nhẹ khi hover */
+            border-radius: 5px; /* Bo góc cho hiệu ứng hover */
+        }
+
+        /* Main Content */
+        .content {
+            padding: 20px;
+        }
+
+        /* Image Hover Effect */
+        .image-container {
+            position: relative;
+            width: 100%;
+            height: 300px;
+            margin-bottom: 20px;
+        }
+
+        .main-image, .hover-image {
+            position: absolute;
+         
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: opacity 0.5s ease;
+        }
+
+        .hover-image {
+            opacity: 0;
+        }
+
+        .image-container:hover .main-image {
+            opacity: 0;
+        }
+
+        .image-container:hover .hover-image {
+            opacity: 1;
+        }
+
+        /* Search Bar */
+        .search-bar {
+            display: flex;
+            justify-content: flex-end;
+            margin-bottom: 20px;
+        }
+
+        .search-bar input[type="text"] {
+            width: 30%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            margin-right: 5px;
+        }
+
+        .search-bar button {
+            padding: 10px 15px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .search-bar button:hover {
+            background-color: #0056b3;
+        }
+
+        /* Stats Section */
+        .stats {
+            display: flex;
+            justify-content: space-around;
+            margin-bottom: 15px;
+           
+        }
+        .stats div {
+            background-color: darkblue;
+            color: white;
+            padding: 20px;
+            border-radius: 5px;
+            text-align: center;
+            width: 20%;
+            margin-right: 3px;
+            box-shadow: 0 4px 8px #ccc;
+        }
+
+        /* Table */
+        .table-container {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+
+        .table {
+            width: 48%;
+            background-color: white;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            padding: 10px;
+        }
+
+        table {
+            width: 80%;
+            border-collapse: collapse;
+        }
+
+        table, th, td {
+            border: 1px solid #ccc;
+        }
+
+        th, td {
+            padding: 15px;
+            text-align: left;
+        }
+
+        th {
+            background-color:aliceblue;
+            color: darkslateblue;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 15px;
+            background-color: #0056b3;
+            color: white;
+            margin-top: 30px;
+        }
+
+        .link a {
+            color: #007bff;
+            text-decoration: none;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header Section -->
+    <div class="header">
+        
+        <h1>Thư viện Đại học Công nghiệp</h1>
+        <div class="profile">
+            <img src="https://img.icons8.com/ios-filled/30/ffffff/user.png" alt="Profile">
+            <span>Người dùng</span>
+            <button onclick="logout()">Đăng xuất</button>
+        </div>
+    </div>
+
+    <!-- Navigation Bar -->
+    <div class="nav">
+        <a href="#borrow">Phiếu mượn</a>
+        <a href="#violation">Phiếu vi phạm</a>
+        <a href="#books">Sách</a>
+        <a href="#users">Người dùng</a>
+    </div>
+
+    <!-- Main Content Section -->
+    <div class="content">
+        <div class="search-bar">
+            <input type="text" placeholder="Nhập từ khóa...">
+            <button>
+                <img src="https://img.icons8.com/material-outlined/24/ffffff/search.png" class="search-icon" alt="Tìm kiếm">
+            </button>
+        </div>
+
+        <!-- Stats Section -->
+        <div class="stats">
+            <div>Số sách: 10</div>
+            <div>Số người dùng: 10</div>
+            <div>Số người dùng đang vi phạm: 10</div>
+            <div>Số sách quá hạn: 10</div>
+        </div>
+
+        <!-- Image and Introduction Section -->
+        <div class="image-container">
+            <img src="image/AnhThuVien.jpg" alt="Main Image" class="main-image">
+            <img src="image/AnhSach.jpg" alt="Hover Image" class="hover-image">
+            
+        </div>
+
+        <div class="introduction">
+            <h2>Giới thiệu hệ thống thư viện</h2>
+            <p>Thư viện Trường Đại học Công nghiệp Hà Nội là một trong những cơ sở học tập và nghiên cứu quan trọng, phục vụ nhu cầu học tập, nghiên cứu khoa học và phát triển nghề nghiệp của sinh viên, giảng viên và cán bộ nhân viên trong trường. Thư viện cung cấp một kho tài liệu phong phú với nhiều đầu sách, tài liệu điện tử, và các dịch vụ hỗ trợ học tập hiện đại.</p>
+            <p>Với không gian học tập thân thiện và tiện nghi, chúng tôi cam kết mang đến cho người sử dụng những trải nghiệm tốt nhất trong quá trình nghiên cứu và học tập.</p>
+        </div>
+
+        <!-- Table Section -->
+        <div class="table-container">
+            <div class="table">
+                <h2>Người dùng mới</h2>
+                <table>
+                    <tr>
+                        <th>Mã người dùng</th>
+                        <th>Họ tên</th>
+                        <th>Số điện thoại</th>
+                        <th>Tên tài khoản</th>
+                    </tr>
+                    <tr>
+                        <td>ND1</td>
+                        <td>Nguyễn Văn A</td>
+                        <td>0123456789</td>
+                        <td>TK_A</td>
+                    </tr>
+                    <tr>
+                        <td>ND2</td>
+                        <td>Nguyễn Thị B</td>
+                        <td>0284957372</td>
+                        <td>TK_B</td>
+                    </tr>
+                    <tr>
+                        <td>ND3</td>
+                        <td>Trần Văn C</td>
+                        <td>0385628573</td>
+                        <td>TK_C</td>
+                    </tr>
+                    <tr>
+                        <td>ND4</td>
+                        <td>Lê Văn D</td>
+                        <td>0385739243</td>
+                        <td>TK_D</td>
+                    </tr>
+                </table>
+            </div>
+
+            <div class="table">
+                <h2>Sách mới</h2>
+                <table>
+                    <tr>
+                        <th>Mã sách</th>
+                        <th>Tên sách</th>
+                        <th>Thể loại</th>
+                        <th>Số lượng</th>
+                    </tr>
+                    <tr>
+                        <td>S1</td>
+                        <td>Sách A</td>
+                        <td>Giáo trình</td>
+                        <td>10</td>
+                    </tr>
+                    <tr>
+                        <td>S2</td>
+                        <td>Sách B</td>
+                        <td>Văn học</td>
+                        <td>5</td>
+                    </tr>
+                    <tr>
+                        <td>S3</td>
+                        <td>Sách C</td>
+                        <td>Khoa học</td>
+                        <td>8</td>
+                    </tr>
+                    <tr>
+                        <td>S4</td>
+                        <td>Sách D</td>
+                        <td>Công nghệ</td>
+                        <td>12</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="link">
+            <a href="#">Giới thiệu</a> | 
+            <a href="#">Chính sách bảo mật</a> | 
+            <a href="#">Điều khoản sử dụng</a>
+        </div>
+        <p>&copy; 2024 Trường Đại học Công nghiệp Hà Nội</p>
+    </footer>
+
+    <script>
+        function logout() {
+            alert("Đã đăng xuất!");
+        }
+    </script>
+</body>
+</html>

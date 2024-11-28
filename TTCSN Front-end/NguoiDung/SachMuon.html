@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thư viện Trường Đại học Công Nghiệp Hà Nội</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f4f4f4;
+        }
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        h1 {
+            text-align: center;
+            flex: 1;
+        }
+        .user-info {
+            display: flex;
+            align-items: center;
+        }
+        .user-info img {
+            width: 30px;
+            height: 30px;
+            margin-right: 10px;
+        }
+        .container {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+        th, td {
+            padding: 10px;
+            border: 1px solid #ccc;
+            text-align: left;
+        }
+        th {
+            background-color: #007bff;
+            color: white;
+        }
+        button {
+            padding: 10px 15px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .hidden {
+            display: none;
+        }
+        .loan-form div {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <h1>Thư viện Đại học Công Nghiệp Hà Nội</h1>
+        <div class="user-info">
+            <img src="https://img.icons8.com/ios-filled/50/000000/user.png" alt="User Icon">
+            <span>User A</span>
+            <button onclick="logout()">Đăng xuất</button>
+        </div>
+    </div>
+
+    <div class="container" id="bookList">
+        <h2>Sách có thể mượn</h2>
+        <table>
+            <tr>
+                <th>STT</th>
+                <th>Mã Sách</th>
+                <th>Tên sách</th>
+                <th>Thể loại</th>
+                <th>Nhà xuất bản</th>
+                <th>Số trang</th>
+                <th>Tác giả</th>
+                <th>Hành động</th>
+            </tr>
+            <tr>
+                <td>1</td>
+                <td>S01</td>
+                <td>Nguyên lý hệ điều hành</td>
+                <td>TLB</td>
+                <td>NXB1</td>
+                <td>230</td>
+                <td>T G A</td>
+                <td><button onclick="createLoan('S01', 'Nguyên lý hệ điều hành')">Mượn</button></td>
+            </tr>
+            <tr>
+                <td>2</td>
+                <td>S02</td>
+                <td>Lập trình Java</td>
+                <td>TLB</td>
+                <td>NXB2</td>
+                <td>150</td>
+                <td>T G B</td>
+                <td><button onclick="createLoan('S02', 'Lập trình Java')">Mượn</button></td>
+            </tr>
+            <tr>
+                <td>3</td>
+                <td>S03</td>
+                <td>Chỉ thị điều khiển</td>
+                <td>TLC</td>
+                <td>NXB3</td>
+                <td>120</td>
+                <td>T G C</td>
+                <td><button onclick="createLoan('S03', 'Chỉ thị điều khiển')">Mượn</button></td>
+            </tr>
+        </table>
+    </div>
+
+    <div class="container hidden" id="loanForm">
+        <h2>Tạo phiếu mượn</h2>
+        <div class="loan-form">
+            <div>
+                <label for="loanId">Mã phiếu mượn:</label>
+                <input type="text" id="loanId" value="PM_01" readonly>
+            </div>
+            <div>
+                <label for="bookId">Mã sách:</label>
+                <input type="text" id="bookId" readonly>
+            </div>
+            <div>
+                <label for="loanDuration">Thời hạn mượn:</label>
+                <input type="text" id="loanDuration" value="7 ngày" readonly>
+            </div>
+            <div>
+                <label for="bookName">Tên sách:</label>
+                <input type="text" id="bookName" readonly>
+            </div>
+            <button onclick="confirmLoan()">Tạo phiếu</button>
+            <button onclick="cancelLoan()">Hủy</button>
+        </div>
+    </div>
+
+    <script>
+        function createLoan(bookId, bookName) {
+            document.getElementById('bookId').value = bookId;
+            document.getElementById('bookName').value = bookName;
+            document.getElementById('bookList').classList.add('hidden');
+            document.getElementById('loanForm').classList.remove('hidden');
+        }
+
+        function confirmLoan() {
+            alert('Phiếu mượn đã được tạo thành công!');
+            cancelLoan(); // Quay lại danh sách sách
+        }
+
+        function cancelLoan() {
+            document.getElementById('loanForm').classList.add('hidden');
+            document.getElementById('bookList').classList.remove('hidden');
+        }
+
+        function logout() {
+            alert('Đã đăng xuất!');
+        }
+    </script>
+
+</body>
+</html>

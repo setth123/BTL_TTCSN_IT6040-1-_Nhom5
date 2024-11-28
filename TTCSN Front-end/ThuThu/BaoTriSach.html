@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bảo trì sách</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+
+        header {
+            background-color: #0078d4;
+            color: white;
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 24px;
+        }
+
+        header button {
+            background-color: white;
+            color: #0078d4;
+            border: none;
+            padding: 8px 12px;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+
+        .container {
+            padding: 20px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            background-color: white;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        th, td {
+            padding: 10px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #0078d4;
+            color: white;
+        }
+
+        .btn {
+            padding: 5px 10px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .btn.edit {
+            background-color: #ffc107;
+            color: white;
+        }
+
+        .btn.delete {
+            background-color: #dc3545;
+            color: white;
+        }
+
+        .btn.add {
+            background-color: #28a745;
+            color: white;
+        }
+
+        .form-container {
+            display: none;
+            background-color: white;
+            padding: 20px;
+            margin-top: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+
+        .form-container.active {
+            display: block;
+        }
+
+        .form-container label {
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        .form-container input, .form-container button {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+
+        .form-container button {
+            background-color: #0078d4;
+            color: white;
+            border: none;
+        }
+
+        .form-container button.cancel {
+            background-color: #dc3545;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>Thư viện Đại học Công Nghiệp</h1>
+    <button onclick="logout()">Đăng xuất</button>
+</header>
+
+<div class="container">
+    <h2>Bảo trì sách</h2>
+    <button class="btn add" onclick="showAddForm()">Thêm sách mới</button>
+    <table>
+        <thead>
+            <tr>
+                <th>Mã sách</th>
+                <th>Tên sách</th>
+                <th>Nhà xuất bản</th>
+                <th>Ngày phát hành</th>
+                <th>Số lượng</th>
+                <th>Số trang</th>
+                <th>Tác giả</th>
+                <th>Thể loại</th>
+                <th>Sửa</th>
+                <th>Xóa</th>
+            </tr>
+        </thead>
+        <tbody id="book-table">
+            <tr>
+                <td>S1</td>
+                <td>Sách A</td>
+                <td>Nhà xuất bản A</td>
+                <td>20/10/2023</td>
+                <td>10</td>
+                <td>50</td>
+                <td>Tác giả A</td>
+                <td>Thể loại 1</td>
+                <td><button class="btn edit" onclick="showEditForm('S1')">Sửa</button></td>
+                <td><button class="btn delete" onclick="deleteBook('S1')">Xóa</button></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div id="form-container" class="form-container">
+        <h3 id="form-title">Thêm sách mới</h3>
+        <form id="book-form">
+            <label for="book-name">Tên sách:</label>
+            <input type="text" id="book-name" required>
+
+            <label for="publisher">Nhà xuất bản:</label>
+            <input type="text" id="publisher" required>
+
+            <label for="release-date">Ngày phát hành:</label>
+            <input type="date" id="release-date" required>
+
+            <label for="quantity">Số lượng:</label>
+            <input type="number" id="quantity" min="1" required>
+
+            <label for="pages">Số trang:</label>
+            <input type="number" id="pages" min="1" required>
+
+            <label for="author">Tác giả:</label>
+            <input type="text" id="author" required>
+
+            <label for="category">Thể loại:</label>
+            <input type="text" id="category" required>
+
+            <button type="submit" id="form-submit">Lưu thông tin</button>
+            <button type="button" class="cancel" onclick="hideForm()">Hủy</button>
+        </form>
+    </div>
+</div>
+
+<script>
+    function showAddForm() {
+        document.getElementById('form-title').innerText = 'Thêm sách mới';
+        document.getElementById('form-container').classList.add('active');
+        document.getElementById('book-form').reset();
+        document.getElementById('form-submit').onclick = function () {
+            addBook();
+        };
+    }
+
+    function showEditForm(bookId) {
+        document.getElementById('form-title').innerText = 'Cập nhật thông tin sách';
+        document.getElementById('form-container').classList.add('active');
+        // Mock data loading
+        document.getElementById('book-name').value = 'Sách A';
+        document.getElementById('publisher').value = 'Nhà xuất bản A';
+        document.getElementById('release-date').value = '2023-10-20';
+        document.getElementById('quantity').value = '10';
+        document.getElementById('pages').value = '50';
+        document.getElementById('author').value = 'Tác giả A';
+        document.getElementById('category').value = 'Thể loại 1';
+        document.getElementById('form-submit').onclick = function () {
+            updateBook(bookId);
+        };
+    }
+
+    function hideForm() {
+        document.getElementById('form-container').classList.remove('active');
+    }
+
+    function addBook() {
+        alert('Thêm sách thành công!');
+        hideForm();
+    }
+
+    function updateBook(bookId) {
+        alert('Cập nhật sách ' + bookId + ' thành công!');
+        hideForm();
+    }
+
+    function deleteBook(bookId) {
+        if (confirm('Bạn có chắc chắn muốn xóa sách ' + bookId + '?')) {
+            alert('Xóa sách ' + bookId + ' thành công!');
+        }
+    }
+
+    function logout() {
+        alert('Đăng xuất thành công!');
+    }
+</script>
+
+</body>
+</html>
