@@ -21,7 +21,7 @@ public class NguoiDungController {
             return ndr.findAll();
         }
         // Nếu có từ khoá, tìm kiếm người dùng theo tên hoặc các thuộc tính khác
-        return ndr(keyword); // Giả sử bạn tìm theo tên
+        return ndr.findByHoTenContainingIgnoreCase(keyword); // Giả sử bạn tìm theo tên
     }
     //if user TrangThaiVP equal to false change its to true and vice versa
 
