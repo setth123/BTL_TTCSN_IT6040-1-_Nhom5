@@ -5,7 +5,9 @@ import com.example.Server.repository.NguoiDungRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/nguoi-dung")
@@ -23,6 +25,19 @@ public class NguoiDungController {
         // Nếu có từ khoá, tìm kiếm người dùng theo tên hoặc các thuộc tính khác
         return ndr.findByHoTenContainingIgnoreCase(keyword); // Giả sử bạn tìm theo tên
     }
-    //if user TrangThaiVP equal to false change its to true and vice versa
+    @PutMapping("/{maNguoiDung}/{state}")
+    public String setVP(@PathVariable String maNguoiDung, @PathVariable String state){
+        Optional<NguoiDung> userOptional=ndr.findById(maNguoiDung);
+        if(userOptional.isPresent()){
+            NguoiDung user = userOptional.get();
+            user.setTrangThaiTK(Boolean.parseBoolean(state));
+            ndr.save(user);
+            return "success";
+        }
+        else{
+            return "fail";
+        }
+    }
+    //if user TrangThaiVP equal to false change its to true and vice versa and
 
 }
