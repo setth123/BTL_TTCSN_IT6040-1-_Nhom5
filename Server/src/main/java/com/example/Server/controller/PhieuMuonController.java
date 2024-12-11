@@ -33,6 +33,16 @@ public class PhieuMuonController {
 
         return ResponseEntity.ok(danhSachPhieuMuon);
     }
+    @GetMapping("/{maND}")
+    public ResponseEntity<?> getPhieuMuonByNguoiDung(@PathVariable String maND) {
+        List<PhieuMuon> phieuMuons = phieuMuonRepository.findByNguoiDung_MaNguoiDung(maND);
+        
+        if (phieuMuons.isEmpty()) {
+            return ResponseEntity.badRequest().body("Không có phiếu mượn cho người dùng này.");
+        }
+        
+        return ResponseEntity.ok(phieuMuons); // Trả về danh sách phiếu mượn
+    }
 
     @PostMapping("/check")
     public ResponseEntity<?> checkTrangThai(@RequestBody CheckRequest request) {
@@ -53,9 +63,12 @@ public class PhieuMuonController {
 
     @PostMapping("/create")
     public ResponseEntity<?> createPhieuMuon(@RequestBody PhieuMuonRequest request) {
+        // Lấy các thông tin từ request
         String maSach = request.getMaSach();
         Integer soLuong = request.getSoLuongMuon();
+        String maNguoiDung = request.getMaNguoiDung();
 
-        return phieuMuonService.createPhieuMuon(maSach,soLuong);
+        // Gọi service để xử lý
+        return phieuMuonService.createPhieuMuon(maSach, soLuong, maNguoiDung);
     }
 }

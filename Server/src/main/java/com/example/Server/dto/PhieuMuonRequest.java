@@ -4,7 +4,8 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class PhieuMuonRequest {
-    private String maSach;
-    private Integer soLuongMuon;
+public class PhieuMuonRequest {      
+    private Integer soLuongMuon;    
+    private String maNguoiDung;   
+    private String maSach; 
 }
