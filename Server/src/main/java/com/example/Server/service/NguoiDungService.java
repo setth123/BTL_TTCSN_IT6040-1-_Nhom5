@@ -46,6 +46,10 @@ public class NguoiDungService {
         NguoiDung nguoiDung = nguoiDungRepository.findByTenTK(loginRequest.getTenTK())
                 .orElseThrow(() -> new IllegalArgumentException("Tên tài khoản không tồn tại"));
 
+        // Kiểm tra trạng thái tài khoản (nếu tài khoản bị khóa, thông báo tài khoản bị khóa)
+        if (!nguoiDung.getTrangThaiTK()) {
+            throw new IllegalArgumentException("Tài khoản bị khóa");
+        }
         // Kiểm tra mật khẩu
         if (!nguoiDung.getMatKhau().equals(loginRequest.getMatKhau())) {
             throw new IllegalArgumentException("Mật khẩu không đúng");
