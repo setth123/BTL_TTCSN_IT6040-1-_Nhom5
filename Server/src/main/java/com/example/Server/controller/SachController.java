@@ -18,7 +18,13 @@ public class SachController {
 
     @GetMapping
     public ResponseEntity<List<SachDTO>> getAllSach() {
-        List<SachDTO> sachDTOList = sachService.getAllSach();
+        List<SachDTO> sachDTOList = sachService.getAllSach(null);
+        return new ResponseEntity<>(sachDTOList, HttpStatus.OK);
+    }
+
+    @GetMapping("/{keyword}")
+    public ResponseEntity<List<SachDTO>> searchSach(@RequestBody String keyword) {
+        List<SachDTO> sachDTOList = sachService.getAllSach(keyword);
         return new ResponseEntity<>(sachDTOList, HttpStatus.OK);
     }
 

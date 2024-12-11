@@ -21,8 +21,13 @@ public class SachService {
     private TheLoaiRepository theLoaiRepository;
 
     // 1. Lấy tất cả sách
-    public List<SachDTO> getAllSach() {
+    public List<SachDTO> getAllSach(String keyword) {
         List<Sach> sachList = sachRepository.findAll();
+
+        if (keyword != null && !keyword.trim().isEmpty()) {
+            sachList = sachRepository.findByTenSachContainingIgnoreCase(keyword);
+        }
+        else sachList=sachRepository.findAll();
         // Chuyển đổi từ Entity sang DTO trực tiếp
         return sachList.stream().map(sach -> new SachDTO(
                 sach.getMaSach(),
