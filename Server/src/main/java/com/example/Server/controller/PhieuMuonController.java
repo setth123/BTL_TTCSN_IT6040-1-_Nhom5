@@ -2,12 +2,21 @@ package com.example.Server.controller;
 
 import com.example.Server.dto.CheckRequest;
 import com.example.Server.dto.PhieuMuonRequest;
+import com.example.Server.entity.NguoiDung;
 import com.example.Server.entity.PhieuMuon;
+import com.example.Server.entity.PhieuViPham;
+import com.example.Server.entity.Sach;
+import com.example.Server.repository.NguoiDungRepository;
 import com.example.Server.repository.PhieuMuonRepository;
+import com.example.Server.repository.PhieuViPhamRepository;
+import com.example.Server.repository.SachRepository;
 import com.example.Server.service.CheckTrangThaiService;
 import com.example.Server.service.PhieuMuonService;
 
+import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -23,6 +32,13 @@ public class PhieuMuonController {
     @Autowired
     private PhieuMuonRepository phieuMuonRepository;
 
+    @Autowired
+    private PhieuViPhamRepository phieuViPhamRepository;
+
+    @Autowired
+    private NguoiDungRepository ndr;
+    @Autowired
+    private SachRepository sr;
     @Autowired
     private CheckTrangThaiService checkTrangThaiService;
 
@@ -70,5 +86,49 @@ public class PhieuMuonController {
 
         // Gọi service để xử lý
         return phieuMuonService.createPhieuMuon(maSach, soLuong, maNguoiDung);
+    }
+
+    @PutMapping("/return/{maPhieuMuon}")
+    public ResponseEntity<?> returnBook(@PathVariable String maPhieuMuon) {
+        Optional<PhieuMuon> pmOpt=phieuMuonRepository.findById(maPhieuMuon);
+        if(pmOpt.isPresent()){
+            PhieuMuon pm=pmOpt.get();
+            pm.setTrangThai(true);
+            phieuMuonRepository.save(pm);
+            Sach s=pm.getSach();
+            s.setSoLuong(s.getSoLuong()+pm.getSoLuongMuon());
+            sr.save(s);
+            //create violation slip
+            int soNgayQuaHan =(int) ChronoUnit.DAYS.between(pm.getThoiHan(), LocalDateTime.now());
+
+            if (soNgayQuaHan > 0) { // Chỉ tạo phiếu phạt nếu quá hạn
+                PhieuViPham vs = new PhieuViPham();
+                vs.setMaPhieuVP("VP_"+ System.currentTimeMillis());
+                vs.setPhieuMuon(pm);
+                vs.setSoNgayQuaHan(soNgayQuaHan);
+                vs.setSoTienPhat(tinhTienPhat(soNgayQuaHan)); // Hàm tính tiền phạt
+                vs.setTrangThai(false);
+                phieuViPhamRepository.save(vs); // Lưu phiếu phạt vào cơ sở dữ liệu
+                
+                NguoiDung nd=pm.getNguoiDung();
+                nd.setSoLanViPham(nd.getSoLanViPham()+1);
+                nd.setTrangThaiVP(true);
+                ndr.save(nd);
+            }
+
+        }
+        //return borrow slip list
+        return getDanhSachPhieuMuon();
+    }
+    private double tinhTienPhat(int soNgayQuaHan) {
+        if (soNgayQuaHan <= 14) {
+            // Từ ngày thứ 8 đến ngày thứ 14, 5.000 đồng/ngày
+            return (soNgayQuaHan ) * 5000;
+        } else {
+            // Sau ngày thứ 15, tăng thêm 2.000 đồng/ngày so với mức trước đó
+            int ngayTu8Den14 = 14 - 7; // 7 ngày đầu tiên phạt 5.000 đồng/ngày
+            int ngaySau14 = soNgayQuaHan - 14; // Các ngày sau ngày thứ 14
+            return (ngayTu8Den14 * 5000) + (ngaySau14 * 7000);
+        }
     }
 }

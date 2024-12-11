@@ -1,6 +1,9 @@
 package com.example.Server.controller;
 
+import com.example.Server.entity.NguoiDung;
+import com.example.Server.entity.PhieuMuon;
 import com.example.Server.entity.PhieuViPham;
+import com.example.Server.repository.NguoiDungRepository;
 import com.example.Server.repository.PhieuViPhamRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -15,6 +18,9 @@ public class PhieuViPhamController {
 
     @Autowired
     PhieuViPhamRepository pvpr;
+    @Autowired
+    NguoiDungRepository ndr;
+
 
     /**
      * API tìm kiếm phiếu vi phạm theo mã phiếu vi phạm
@@ -39,9 +45,13 @@ public class PhieuViPhamController {
         Optional<PhieuViPham> pvp=pvpr.findById(maPhieuVP);
         if(pvp.isPresent()){
             PhieuViPham violation = pvp.get();
-            violation.setTrangThai(!Boolean.parseBoolean(state));
+            violation.setTrangThai(true);
             pvpr.save(violation);
+            PhieuMuon pm=violation.getPhieuMuon();
+            NguoiDung nd=pm.getNguoiDung();
+            nd.setTrangThaiVP(false);
+            ndr.save(nd);
         }
-            return getPVP();
+        return getPVP();
     }
 }
