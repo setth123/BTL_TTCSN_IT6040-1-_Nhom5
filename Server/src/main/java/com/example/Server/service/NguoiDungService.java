@@ -42,7 +42,6 @@ public class NguoiDungService {
         nguoiDung.setPhieuMuons(new ArrayList<>());
         // Lưu thông tin người dùng vào cơ sở dữ liệu
         nguoiDungRepository.save(nguoiDung);
-        
     }
 
      public NguoiDung loginUser(LoginRequest loginRequest) {

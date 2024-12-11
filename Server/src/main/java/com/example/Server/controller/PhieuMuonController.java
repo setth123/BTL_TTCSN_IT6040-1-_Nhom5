@@ -19,7 +19,6 @@ public class PhieuMuonController {
 
     @PostMapping("/check")
     public ResponseEntity<?> checkTrangThai(@RequestBody CheckRequest request) {
-        String maSach = request.getMaSach();
         String maNguoiDung = request.getMaNguoiDung();
 
         String trangThai = checkTrangThaiService.checkTrangThai(maNguoiDung, maSach);

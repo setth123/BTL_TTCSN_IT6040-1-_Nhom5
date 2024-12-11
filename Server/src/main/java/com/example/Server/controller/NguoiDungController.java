@@ -3,10 +3,14 @@ package com.example.Server.controller;
 import com.example.Server.entity.NguoiDung;
 import com.example.Server.repository.NguoiDungRepository;
 import com.example.Server.service.NguoiDungService;
+
+import jakarta.validation.Valid;
+
 import com.example.Server.dto.LoginRequest;
 import com.example.Server.dto.RegisterRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -21,9 +25,18 @@ public class NguoiDungController {
     @Autowired
     private NguoiDungService nguoiDungService;
     
-    //đăng ký người dùng
+    // Đăng ký người dùng
     @PostMapping("/register")
-    public ResponseEntity<?> register(@RequestBody RegisterRequest request) {
+    public ResponseEntity<?> register(@Valid @RequestBody RegisterRequest request, BindingResult bindingResult) {
+        // Kiểm tra lỗi xác thực
+        if (bindingResult.hasErrors()) {
+            // Tạo thông báo lỗi từ bindingResult
+            StringBuilder errorMessages = new StringBuilder();
+            bindingResult.getAllErrors().forEach(error -> {
+                errorMessages.append(error.getDefaultMessage()).append("\n");
+            });
+            return ResponseEntity.badRequest().body(errorMessages.toString());
+        }
         try {
             nguoiDungService.registerUser(request);
             return ResponseEntity.ok("Đăng ký thành công");
