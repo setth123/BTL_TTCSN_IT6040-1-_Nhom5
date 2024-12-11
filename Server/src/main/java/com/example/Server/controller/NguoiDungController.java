@@ -52,18 +52,14 @@ public class NguoiDungController {
         return ndr.findByHoTenContainingIgnoreCase(keyword); // Giả sử bạn tìm theo tên
     }
     @PutMapping("/{maNguoiDung}/{state}")
-    public String setVP(@PathVariable String maNguoiDung, @PathVariable String state){
+    public List<NguoiDung> setVP(@PathVariable String maNguoiDung, @PathVariable String state){
         Optional<NguoiDung> userOptional=ndr.findById(maNguoiDung);
         if(userOptional.isPresent()){
             NguoiDung user = userOptional.get();
             user.setTrangThaiTK(Boolean.parseBoolean(state));
             ndr.save(user);
-            return "success";
         }
-        else{
-            return "fail";
-        }
+        return searchUsers(null);
     }
-    //if user TrangThaiVP equal to false change its to true and vice versa and
 
 }
