@@ -35,8 +35,8 @@ public class NguoiDungService {
         nguoiDung.setMatKhau(request.getMatKhau()); // Lưu ý: Nên mã hóa mật khẩu
         nguoiDung.setTenTK(request.getTenTK());
         nguoiDung.setSoLanViPham(0); // Mặc định số lần vi phạm là 0
-        nguoiDung.setTrangThaiTK(true); // Mặc định tài khoản hoạt động
-        nguoiDung.setTrangThaiVP(true); // Mặc định người dùng hoạt động
+        nguoiDung.setTrangThaiTK(true); // không bị khóa
+        nguoiDung.setTrangThaiVP(false); // không vi phạm 
         // Lưu thông tin người dùng vào cơ sở dữ liệu
         nguoiDungRepository.save(nguoiDung);
     }

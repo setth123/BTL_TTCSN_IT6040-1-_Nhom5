@@ -1,8 +1,14 @@
 package com.example.Server.controller;
 
 import com.example.Server.dto.CheckRequest;
+import com.example.Server.dto.PhieuMuonRequest;
+import com.example.Server.entity.PhieuMuon;
+import com.example.Server.repository.PhieuMuonRepository;
 import com.example.Server.service.CheckTrangThaiService;
 import com.example.Server.service.PhieuMuonService;
+
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -15,23 +21,41 @@ public class PhieuMuonController {
     private PhieuMuonService phieuMuonService;
 
     @Autowired
+    private PhieuMuonRepository phieuMuonRepository;
+
+    @Autowired
     private CheckTrangThaiService checkTrangThaiService;
+
+    @GetMapping("/danh-sach")
+    public ResponseEntity<?> getDanhSachPhieuMuon() {
+        // Lấy danh sách tất cả phiếu mượn từ cơ sở dữ liệu
+        List<PhieuMuon> danhSachPhieuMuon = phieuMuonRepository.findAll();
+
+        return ResponseEntity.ok(danhSachPhieuMuon);
+    }
 
     @PostMapping("/check")
     public ResponseEntity<?> checkTrangThai(@RequestBody CheckRequest request) {
         String maNguoiDung = request.getMaNguoiDung();
-
-        String trangThai = checkTrangThaiService.checkTrangThai(maNguoiDung, maSach);
-        if ("Ổn".equals(trangThai)) {
-            return ResponseEntity.ok("Mọi thứ ổn.");
+    
+        // Kiểm tra trạng thái người dùng thông qua service
+        String trangThai = checkTrangThaiService.checkTrangThai(maNguoiDung);
+    
+        // Trả về thông báo tương ứng với trạng thái
+        if (trangThai.equals("Người dùng không tồn tại.")) {
+            return ResponseEntity.badRequest().body(trangThai);
+        } else if (trangThai.equals("Người dùng đang trong trạng thái vi phạm.")) {
+            return ResponseEntity.badRequest().body(trangThai);
+        } else {
+            return ResponseEntity.ok(trangThai);  // Nếu trạng thái không vi phạm
         }
-        return ResponseEntity.badRequest().body(trangThai);
     }
 
-
     @PostMapping("/create")
-    public ResponseEntity<?> createPhieuMuon(@RequestBody String maNguoiDung, @RequestBody String maSach, 
-                                              @RequestBody int soLuong) {
-        return phieuMuonService.createPhieuMuon(maNguoiDung, maSach, soLuong);
+    public ResponseEntity<?> createPhieuMuon(@RequestBody PhieuMuonRequest request) {
+        String maSach = request.getMaSach();
+        Integer soLuong = request.getSoLuongMuon();
+
+        return phieuMuonService.createPhieuMuon(maSach,soLuong);
     }
 }
