@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import com.example.Server.service.SachService;
 import com.example.Server.dto.SachDTO;
 
+@CrossOrigin(origins ="http://127.0.0.1:5500")
 @RestController
 @RequestMapping("/api/sach")
 public class SachController {
