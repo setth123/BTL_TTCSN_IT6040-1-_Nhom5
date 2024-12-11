@@ -1,7 +1,5 @@
 package com.example.Server.service;
 
-import java.util.ArrayList;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -39,7 +37,6 @@ public class NguoiDungService {
         nguoiDung.setSoLanViPham(0); // Mặc định số lần vi phạm là 0
         nguoiDung.setTrangThaiTK(true); // Mặc định tài khoản hoạt động
         nguoiDung.setTrangThaiND(true); // Mặc định người dùng hoạt động
-        nguoiDung.setPhieuMuons(new ArrayList<>());
         // Lưu thông tin người dùng vào cơ sở dữ liệu
         nguoiDungRepository.save(nguoiDung);
         
