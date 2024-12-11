@@ -86,13 +86,13 @@
 
     <div class="container">
         <h1 style="margin-top: 30px; color: #0056b3;">Đăng nhập</h1>
-        <form>
+        <form id="loginForm">
             <div class="form-group">
-                <input
+                <input id="loginAccount"
                 style="margin-top: 30px; font-size: 40;" type="text" placeholder="Nhập tên tài khoản" required>
             </div>
             <div class="form-group">
-                <input type="password" placeholder="Nhập mật khẩu" required>
+                <input id="loginPassword" type="password" placeholder="Nhập mật khẩu" required>
             </div>
             <div class="form-group">
                 <button type="submit"
@@ -104,21 +104,21 @@
 
     <div class="container" style="display: none;">
         <h1>Đăng ký</h1>
-        <form>
+        <form id="registrationForm">
             <div class="form-group">
-                <input type="text" placeholder="Họ tên" required>
+                <input type="text" id="hoTen" placeholder="Họ tên" required>
             </div>
             <div class="form-group">
-                <input type="tel" placeholder="Số điện thoại" required>
+                <input type="tel" id="soDienThoai" placeholder="Số điện thoại" required>
             </div>
             <div class="form-group">
-                <input type="text" placeholder="Địa chỉ" required>
+                <input type="text" id="diaChi" placeholder="Địa chỉ" required>
             </div>
             <div class="form-group">
-                <input type="text" placeholder="Tên tài khoản" required>
+                <input type="text" id="tenTK" placeholder="Tên tài khoản" required>
             </div>
             <div class="form-group">
-                <select required>
+                <select id="gioiTinh" required>
                     <option value="">Chọn giới tính</option>
                     <option value="Nam">Nam</option>
                     <option value="Nữ">Nữ</option>
@@ -126,10 +126,10 @@
                 </select>
             </div>
             <div class="form-group">
-                <input type="password" placeholder="Mật khẩu" required>
+                <input type="password" id="matKhau" placeholder="Mật khẩu" required>
             </div>
             <div class="form-group">
-                <input type="password" placeholder="Xác nhận mật khẩu" required>
+                <input type="password" id="xacNhanMatKhau" placeholder="Xác nhận mật khẩu" required>
             </div>
             <div class="form-group">
                 <button type="submit">Đăng ký</button>
@@ -146,6 +146,6 @@
             registerForm.style.display = registerForm.style.display === 'none' ? 'block' : 'none';
         }
     </script>
-
+    <script src="js/login.js"></script>
 </body>
 </html>
