@@ -20,7 +20,7 @@ public class NguoiDung {
     private String tenTK;
     private Integer soLanViPham;
     private Boolean trangThaiTK;
-    private Boolean trangThaiND;
+    private Boolean trangThaiVP;
 
     @OneToMany(mappedBy = "nguoiDung", cascade = CascadeType.ALL)
     private List<PhieuMuon> phieuMuons;
