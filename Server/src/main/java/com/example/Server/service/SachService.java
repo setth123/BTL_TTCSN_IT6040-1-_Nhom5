@@ -60,7 +60,7 @@ public class SachService {
 
         // Lưu sách và trả về DTO
         sachRepository.save(sach);
-        return getAllSach();
+        return getAllSach(null);
     }
 
     // 3. Cập nhật sách
@@ -79,14 +79,14 @@ public class SachService {
             .orElseThrow(() -> new RuntimeException("Thể loại không tồn tại"));
         sach.setTheLoai(theLoai);
         sachRepository.save(sach);
-        return getAllSach();
+        return getAllSach(null);
     }
 
     public List<SachDTO> deleteSach(String maSach){
         Sach sach = sachRepository.findById(maSach)
                 .orElseThrow(() -> new RuntimeException("Sách không tồn tại"));
         sachRepository.delete(sach);
-        return getAllSach();
+        return getAllSach(null);
     }
 }
       
