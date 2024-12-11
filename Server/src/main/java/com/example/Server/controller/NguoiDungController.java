@@ -2,8 +2,11 @@ package com.example.Server.controller;
 
 import com.example.Server.entity.NguoiDung;
 import com.example.Server.repository.NguoiDungRepository;
-
+import com.example.Server.service.NguoiDungService;
+import com.example.Server.dto.LoginRequest;
+import com.example.Server.dto.RegisterRequest;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -15,6 +18,29 @@ public class NguoiDungController {
     @Autowired
     private NguoiDungRepository ndr;
 
+    @Autowired
+    private NguoiDungService nguoiDungService;
+    
+    //đăng ký người dùng
+    @PostMapping("/register")
+    public ResponseEntity<?> register(@RequestBody RegisterRequest request) {
+        try {
+            nguoiDungService.registerUser(request);
+            return ResponseEntity.ok("Đăng ký thành công");
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+    // đăng nhập người dùng
+    @PostMapping("/login")
+    public ResponseEntity<Object> login(@RequestBody LoginRequest loginRequest) {
+        try {
+            NguoiDung nd= nguoiDungService.loginUser(loginRequest);
+            return ResponseEntity.ok(nd);
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
     //find users by keyword, if keyword equal to '' get all users
     @GetMapping("/search")
     public List<NguoiDung> searchUsers(@RequestParam(required = false) String keyword) {
