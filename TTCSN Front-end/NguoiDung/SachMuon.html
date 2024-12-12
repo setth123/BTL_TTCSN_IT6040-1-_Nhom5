@@ -63,7 +63,7 @@
         button:hover {
             background-color: #0056b3;
         }
-        .hidden {
+        #loanForm {
             display: none;
         }
         .loan-form div {
@@ -79,20 +79,26 @@
             border: 1px solid #ccc;
             border-radius: 5px;
         }
+        .back-arrow {
+            cursor: pointer;
+            font-size: 24px;
+            font-family: Arial, sans-serif;
+        }
     </style>
 </head>
 <body>
     <script>
         window.onload = async function (){
-            document.getElementById('username').innerText = localStorage.getItem('accountName');
-            
+            document.getElementById('username').innerText = localStorage.getItem('accountUsername');
+            await displayBooks()
         }
     </script>
     <div class="header">
+        <span id="backHome" class="back-arrow" onclick="backToHome()">←</span>
         <h1>Thư viện Đại học Công Nghiệp Hà Nội</h1>
         <div class="user-info">
             <img src="https://img.icons8.com/ios-filled/50/000000/user.png" alt="User Icon">
-            <span id="usernamee"></span>
+            <span id="username"></span>
             <button onclick="logout()">Đăng xuất</button>
         </div>
     </div>
@@ -102,7 +108,6 @@
         <table id="availableBook">
             <tr>
                 <th>STT</th>
-                <th>Mã Sách</th>
                 <th>Tên sách</th>
                 <th>Thể loại</th>
                 <th>Nhà xuất bản</th>
@@ -111,53 +116,17 @@
                 <th>Hành động</th>
         </table>
     </div>
-
-    <div class="container hidden" id="loanForm">
-        <h2>Tạo phiếu mượn</h2>
-        <div class="loan-form">
-            <div>
-                <label for="loanId">Mã phiếu mượn:</label>
-                <input type="text" id="loanId" value="PM_01" readonly>
-            </div>
-            <div>
-                <label for="bookId">Mã sách:</label>
-                <input type="text" id="bookId" readonly>
-            </div>
-            <div>
-                <label for="loanDuration">Thời hạn mượn:</label>
-                <input type="text" id="loanDuration" value="7 ngày" readonly>
-            </div>
-            <div>
-                <label for="bookName">Tên sách:</label>
-                <input type="text" id="bookName" readonly>
-            </div>
-            <button onclick="confirmLoan()">Tạo phiếu</button>
-            <button onclick="cancelLoan()">Hủy</button>
-        </div>
-    </div>
-
     <script>
-        function createLoan(bookId, bookName) {
-            document.getElementById('bookId').value = bookId;
-            document.getElementById('bookName').value = bookName;
-            document.getElementById('bookList').classList.add('hidden');
-            document.getElementById('loanForm').classList.remove('hidden');
-        }
-
-        function confirmLoan() {
-            alert('Phiếu mượn đã được tạo thành công!');
-            cancelLoan(); // Quay lại danh sách sách
-        }
-
-        function cancelLoan() {
-            document.getElementById('loanForm').classList.add('hidden');
-            document.getElementById('bookList').classList.remove('hidden');
-        }
-
         function logout() {
-            alert('Đã đăng xuất!');
+            localStorage.setItem('accountName', '');
+            localStorage.setItem('accountUsername', '');
+            alert("Đã đăng xuất!");
+            window.location.href = 'login.html'
+        }
+        function backToHome(){
+            window.location.href = 'TrangChu_NguoiDung.html';
         }
     </script>
-    <script src="./js/book.js"></script>
+    <script src="js/book.js"></script>
 </body>
 </html>

@@ -11,32 +11,38 @@
             justify-content: center;
             align-items: center;
             height: 100vh;
-            background-image: url('../NguoiDung/image/AnhThuVien2.jpg');
+            background-image: url('../NguoiDung/image/anhnenthuvien.jpg');
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
+            margin: 0;
         }
         .container {
             text-align: center;
-            background: #fff;
-            padding: 30px;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            background: rgba(255, 255, 255, 0.9);
+            padding: 50px; /* Tăng padding để làm bảng dài hơn */
+            border-radius: 15px; /* Tăng độ cong của viền */
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3); /* Tăng độ bóng */
+            width: 350px; /* Đặt chiều rộng cho bảng */
+            border: 2px solid #007BFF; /* Thêm đường viền cho bảng */
         }
         .container h1 {
-            margin-bottom: 20px;
+            margin-bottom: 40px; /* Tăng khoảng cách giữa tiêu đề và nút */
+            font-size: 24px; /* Tăng kích thước tiêu đề */
+            color: #333;
         }
         .btn {
-            display: block;
-            width: 100%;
-            padding: 10px;
-            margin: 10px 0;
+            display: inline-block; /* Thay đổi thành inline-block để căn giữa */
+            width: 70%; /* Đặt chiều rộng của nút */
+            padding: 12px;
+            margin: 15px 0;
             background: #007BFF;
             color: #fff;
             border: none;
-            border-radius: 4px;
+            border-radius: 5px;
             cursor: pointer;
-            font-size: 16px;
+            font-size: 18px; /* Tăng kích thước nút */
+            transition: background 0.3s;
         }
         .btn:hover {
             background: #0056b3;

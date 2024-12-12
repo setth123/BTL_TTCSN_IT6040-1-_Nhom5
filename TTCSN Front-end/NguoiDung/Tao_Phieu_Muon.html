@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tạo phiếu mượn</title>
+    <style>
+        .loan-form div {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <script>
+        window.onload = function() {
+            document.getElementById('bookName').value = localStorage.getItem('selectedBook');
+            document.getElementById('bookId').value = localStorage.getItem('selectedId');
+        }
+    </script>
+    <div class="container hidden" id="loanForm">
+        <h2>Tạo phiếu mượn</h2>
+        <div class="loan-form">
+            <div>
+                <label for="loanId">Mã phiếu mượn:</label>
+                <input type="text" id="loanId" value="PM_01" readonly>
+            </div>
+            <div>
+                <label for="bookId">Mã sách:</label>
+                <input type="text" id="bookId" readonly>
+            </div>
+            <div>
+                <label for="loanDuration">Thời hạn mượn:</label>
+                <input type="text" id="loanDuration" value="7 ngày" readonly>
+            </div>
+            <div>
+                <label for="bookName">Tên sách:</label>
+                <input type="text" id="bookName" readonly>
+            </div>
+            <div>
+                <label for "loanNumber">Số lượng mượn</label>
+                <input type="number" id="loanNumber">
+            </div>
+            <button onclick="confirmLoan()">Tạo phiếu</button>
+            <button onclick="cancelLoan()">Hủy</button>
+        </div>
+    </div>
+    <script>
+        async function confirmLoan() {
+            const maND = localStorage.getItem('accountName');
+            const soLuong = document.getElementById('loanNumber').value;
+            const maSach = localStorage.getItem('selectedId');
+            const loanCardData = {
+                maSach : maSach,
+                soLuongMuon : soLuong,
+                maNguoiDung : maND
+            }
+            const response = await fetch('http://localhost:8080/phieu-muon/create', {
+                method : 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(loanCardData)
+            });
+            const data = await response.text();
+            console.log(typeof(data))
+            if(data){
+                alert(data);
+                window.location.href = 'SachMuon.html';
+            }
+        }
+        function cancelLoan() {
+            localStorage.setItem('selectedBook', '');
+            localStorage.setItem('selectedId', '');
+            window.location.href = 'SachMuon.html';
+        }
+    </script>
+</body>
+</html>
