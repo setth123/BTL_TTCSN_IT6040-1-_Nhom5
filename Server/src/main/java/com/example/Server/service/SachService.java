@@ -8,6 +8,9 @@ import com.example.Server.repository.TheLoaiRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.format.DateTimeFormatter;
+import java.time.LocalDateTime;
+
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -19,6 +22,7 @@ public class SachService {
 
     @Autowired
     private TheLoaiRepository theLoaiRepository;
+    private static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss");
 
     // 1. Lấy tất cả sách
     public List<SachDTO> getAllSach(String keyword) {
@@ -28,12 +32,14 @@ public class SachService {
             sachList = sachRepository.findByTenSachContainingIgnoreCase(keyword);
         }
         else sachList=sachRepository.findAll();
+
+
         // Chuyển đổi từ Entity sang DTO trực tiếp
         return sachList.stream().map(sach -> new SachDTO(
                 sach.getMaSach(),
                 sach.getTenSach(),
                 sach.getNxb(),
-                sach.getNph(),
+                sach.getNph().format(formatter),
                 sach.getSoLuong(),
                 sach.getSoTrang(),
                 sach.getTacGia(),
