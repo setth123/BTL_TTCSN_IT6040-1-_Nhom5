@@ -52,4 +52,3 @@ async function insertDataIntoTable() {
     }
 }
 
-// Gọi hàm để thực hiện chèn dữ liệu vào bảng

@@ -222,7 +222,7 @@
 <body>
     <script>
         window.onload = async function() {
-            const accountName = localStorage.getItem('accountName');
+            
             const accountUsername = localStorage.getItem('accountUsername');
 
             // Nếu bất kỳ giá trị nào rỗng, chuyển hướng về trang đăng nhập
@@ -231,7 +231,7 @@
                 window.location.href = 'login.html';  // Thay bằng URL của trang đăng nhập
             } else {
                 // Nếu có giá trị, hiển thị chúng
-                document.getElementById('accountName').innerText = accountName;
+                document.getElementById('accountName').innerText = accountUsername;
             }
             await insertDataIntoTable();
         }

@@ -128,6 +128,19 @@
     </style>
 </head>
 <body>
+    <script>
+        window.onload = async function() {
+            const accountName = localStorage.getItem('adminAccountID');
+            const accountUsername = localStorage.getItem('adminAccountUsername');
+
+            // Nếu bất kỳ giá trị nào rỗng, chuyển hướng về trang đăng nhập
+            if (accountName === '' || !accountUsername === '') {
+                alert('Bạn chưa đăng nhập. Vui lòng đăng nhập lại.');
+                window.location.href = 'Login_ThuThu.html';  // Thay bằng URL của trang đăng nhập
+            } 
+            await insertUsers(), insertDataIntoTable();
+        }
+    </script>
     <div class="header">
         <img src="image/anh cong nghiep nen.jpg" alt="Hanoi University of Industry">
         <h1>Thư viện Đại học Công nghiệp</h1>
@@ -153,80 +166,36 @@
         <div class="table-container">
             <div class="table">
                 <h2>Người dùng mới</h2>
-                <table>
+                <table id="newUser">
                     <tr>
                         <th>Mã người dùng</th>
                         <th>Họ tên</th>
                         <th>Số điện thoại</th>
                         <th>Tên tài khoản</th>
                     </tr>
-                    <tr>
-                        <td>ND1</td>
-                        <td>Nguyễn Văn A</td>
-                        <td>0123456789</td>
-                        <td>TK_A</td>
-                    </tr>
-                    <tr>
-                        <td>ND2</td>
-                        <td>Nguyễn Thị B</td>
-                        <td>0284957372</td>
-                        <td>TK_B</td>
-                    </tr>
-                    <tr>
-                        <td>ND3</td>
-                        <td>Trần Văn C</td>
-                        <td>0385628573</td>
-                        <td>TK_C</td>
-                    </tr>
-                    <tr>
-                        <td>ND4</td>
-                        <td>Lê Văn D</td>
-                        <td>0385739243</td>
-                        <td>TK_D</td>
-                    </tr>
+                    
                 </table>
             </div>
             <div class="table">
                 <h2>Sách mới</h2>
-                <table>
+                <table id="newBook">
                     <tr>
                         <th>Mã sách</th>
                         <th>Tên sách</th>
                         <th>Thể loại</th>
                         <th>Số lượng</th>
                     </tr>
-                    <tr>
-                        <td>S1</td>
-                        <td>Sách A</td>
-                        <td>Thể loại 1</td>
-                        <td>5</td>
-                    </tr>
-                    <tr>
-                        <td>S2</td>
-                        <td>Sách B</td>
-                        <td>Thể loại 2</td>
-                        <td>7</td>
-                    </tr>
-                    <tr>
-                        <td>S3</td>
-                        <td>Sách C</td>
-                        <td>Thể loại 1</td>
-                        <td>8</td>
-                    </tr>
-                    <tr>
-                        <td>S4</td>
-                        <td>Sách D</td>
-                        <td>Thể loại 3</td>
-                        <td>10</td>
-                    </tr>
+                    
                 </table>
             </div>
         </div>
     </div>
     <script>
         function logout() {
-            // Thêm mã để xử lý đăng xuất
+            localStorage.setItem('adminAccountID', '');
+            localStorage.setItem('adminAccountUsername', '');
             alert("Đăng xuất thành công!");
+            window.location.href = 'Login_ThuThu.html';
         }
     </script>
     <script src="./js/index.js"></script>

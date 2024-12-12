@@ -28,8 +28,8 @@ document.getElementById('loginForm').addEventListener('submit', async function(e
         // Kiểm tra dữ liệu trả về (ví dụ, nếu đăng nhập thành công)
         if (data) {
             alert('Đăng nhập thành công!');
-            localStorage.setItem('accountName', data.maTK);
-            localStorage.setItem('accountUsername', data.tenTT);
+            localStorage.setItem('adminAccountID', data.maTK);
+            localStorage.setItem('adminAccountUsername', data.tenTT);
             window.location.href = 'TrangChu_ThuThu.html';  // Chuyển hướng sau khi đăng nhập thành công
             
         } else {

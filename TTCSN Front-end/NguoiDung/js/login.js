@@ -82,8 +82,8 @@ document.getElementById('loginForm').addEventListener('submit', async function(e
         // Kiểm tra dữ liệu trả về (ví dụ, nếu đăng nhập thành công)
         if (data && data.maNguoiDung) { // Kiểm tra nếu có dữ liệu người dùng (maNguoiDung là không rỗng)
             alert('Đăng nhập thành công!');
-            localStorage.setItem('accountName', data.hoTen);
-            localStorage.setItem('accountUsername', data.tenTK);
+            localStorage.setItem('accountName', data.maNguoiDung);
+            localStorage.setItem('accountUsername', data.hoTen);
             window.location.href = 'TrangChu_NguoiDung.html';  // Chuyển hướng sau khi đăng nhập thành công
             
         } else {

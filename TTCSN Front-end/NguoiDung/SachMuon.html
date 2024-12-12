@@ -82,19 +82,24 @@
     </style>
 </head>
 <body>
-
+    <script>
+        window.onload = async function (){
+            document.getElementById('username').innerText = localStorage.getItem('accountName');
+            
+        }
+    </script>
     <div class="header">
         <h1>Thư viện Đại học Công Nghiệp Hà Nội</h1>
         <div class="user-info">
             <img src="https://img.icons8.com/ios-filled/50/000000/user.png" alt="User Icon">
-            <span>User A</span>
+            <span id="usernamee"></span>
             <button onclick="logout()">Đăng xuất</button>
         </div>
     </div>
 
     <div class="container" id="bookList">
         <h2>Sách có thể mượn</h2>
-        <table>
+        <table id="availableBook">
             <tr>
                 <th>STT</th>
                 <th>Mã Sách</th>
@@ -104,37 +109,6 @@
                 <th>Số trang</th>
                 <th>Tác giả</th>
                 <th>Hành động</th>
-            </tr>
-            <tr>
-                <td>1</td>
-                <td>S01</td>
-                <td>Nguyên lý hệ điều hành</td>
-                <td>TLB</td>
-                <td>NXB1</td>
-                <td>230</td>
-                <td>T G A</td>
-                <td><button onclick="createLoan('S01', 'Nguyên lý hệ điều hành')">Mượn</button></td>
-            </tr>
-            <tr>
-                <td>2</td>
-                <td>S02</td>
-                <td>Lập trình Java</td>
-                <td>TLB</td>
-                <td>NXB2</td>
-                <td>150</td>
-                <td>T G B</td>
-                <td><button onclick="createLoan('S02', 'Lập trình Java')">Mượn</button></td>
-            </tr>
-            <tr>
-                <td>3</td>
-                <td>S03</td>
-                <td>Chỉ thị điều khiển</td>
-                <td>TLC</td>
-                <td>NXB3</td>
-                <td>120</td>
-                <td>T G C</td>
-                <td><button onclick="createLoan('S03', 'Chỉ thị điều khiển')">Mượn</button></td>
-            </tr>
         </table>
     </div>
 
@@ -184,6 +158,6 @@
             alert('Đã đăng xuất!');
         }
     </script>
-
+    <script src="./js/book.js"></script>
 </body>
 </html>
