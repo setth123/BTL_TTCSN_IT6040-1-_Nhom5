@@ -8,19 +8,28 @@ import java.time.LocalDateTime;
 
 import lombok.Getter;
 import lombok.Setter;
+import java.time.LocalDateTime;
+ 
 @Entity
 @Getter
 @Setter
+@Table(name="Sach")
 public class Sach {
 
     @Id
+    @Column(name="maSach")
     private String maSach;
-
+    @Column(name="tenSach")
     private String tenSach;
+    @Column(name="nxb")
     private String nxb;
+    @Column(name="nph")
     private LocalDateTime nph;
+    @Column(name="soLuong")
     private Integer soLuong;
+    @Column(name="soTrang")
     private Integer soTrang;
+    @Column(name="tacGia")
     private String tacGia;
 
     @ManyToOne

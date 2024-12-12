@@ -10,11 +10,13 @@ import lombok.Setter;
 @Entity
 @Getter
 @Setter
+@Table(name = "TheLoai")
 public class TheLoai {
 
     @Id
+    @Column(name="maTL")
     private String maTL;
-
+    @Column(name="tenTL")
     private String tenTL;
 
     @OneToMany(mappedBy = "theLoai", cascade = CascadeType.ALL)

@@ -35,6 +35,7 @@ public class SachService {
 
 
         // Chuyển đổi từ Entity sang DTO trực tiếp
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss");
         return sachList.stream().map(sach -> new SachDTO(
                 sach.getMaSach(),
                 sach.getTenSach(),
