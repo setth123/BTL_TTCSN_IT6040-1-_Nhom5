@@ -8,13 +8,17 @@ import lombok.Setter;
 @Entity
 @Getter
 @Setter
+@Table(name="PhieuMuon")
 public class PhieuMuon {
 
     @Id
+    @Column(name="maPM")
     private String maPM;
-
+    @Column(name="thoiHan")
     private LocalDateTime thoiHan;
+    @Column(name="trangThai")
     private Boolean trangThai;
+    @Column(name="soLuongMuon")
     private Integer soLuongMuon;
 
     @ManyToOne
