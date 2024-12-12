@@ -2,6 +2,8 @@ package com.example.Server.dto;
 
 import lombok.Getter;
 import lombok.Setter;
+import java.time.format.DateTimeFormatter;
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
@@ -9,7 +11,7 @@ public class SachDTO {
     private String maSach;
     private String tenSach;
     private String nxb;
-    private String nph;
+    private LocalDateTime nph;
     private Integer soLuong;
     private Integer soTrang;
     private String tacGia;
@@ -19,7 +21,8 @@ public class SachDTO {
         this.maSach = maSach;
         this.tenSach = tenSach;
         this.nxb = nxb;
-        this.nph = nph;
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss");
+        this.nph = LocalDateTime.parse(nph, formatter);
         this.soLuong = soLuong;
         this.soTrang = soTrang;
         this.tacGia = tacGia;

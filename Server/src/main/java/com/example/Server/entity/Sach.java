@@ -17,7 +17,7 @@ public class Sach {
 
     private String tenSach;
     private String nxb;
-    private String nph;
+    private LocalDateTime nph;
     private Integer soLuong;
     private Integer soTrang;
     private String tacGia;
