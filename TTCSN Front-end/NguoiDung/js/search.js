@@ -29,7 +29,7 @@ async function displaySachList() {
             bookItem.textContent = sach.tenSach;
 
             const detailButton = document.createElement('button');
-            detailButton.textContent = 'Xem chi tiết';
+            detailButton.textContent = 'Xem';
             detailButton.addEventListener('click', () => displayBookDetails(sach));
 
             bookItem.appendChild(detailButton);
@@ -75,6 +75,9 @@ async function displayBookDetails(book) {
 
     const cellNhaXuatBan = row.insertCell();
     cellNhaXuatBan.textContent = book.nxb;
+
+    const cellSoLuong=row.insertCell();
+    cellSoLuong.textContent=book.soLuong;
 
     const cellSoTrang = row.insertCell();
     cellSoTrang.textContent = book.soTrang;
