@@ -170,6 +170,11 @@
         .search-bar button:hover {
             background-color: #0056b3;
         }
+        .back-arrow {
+            cursor: pointer;
+            font-size: 24px;
+            font-family: Arial, sans-serif;
+        }
     </style>
 </head>
 <body>
@@ -179,7 +184,7 @@
         }
     </script>
     <div class="header">
-        
+        <span id="backHome" class="back-arrow" onclick="backToHome()">←</span>
         <h1>Thư viện Đại học Công nghiệp</h1>
         <div class="profile">
             <img src="https://img.icons8.com/ios-filled/30/ffffff/user.png" alt="Profile">
@@ -206,6 +211,7 @@
                     <th>Tên sách</th>
                     <th>Thể loại</th>
                     <th>Nhà xuất bản</th>
+                    <th>Số lượng</th>
                     <th>Số trang</th>
                     <th>Tác giả</th>
                     <th>Hành động</th>
@@ -227,6 +233,9 @@
             const editedKeyword = keyword.replace(/ /g, "_");
             localStorage.setItem('keyword', editedKeyword);
             window.location.href = "SearchPage.html";
+        }
+        function backToHome(){
+            window.location.href = 'TrangChu_NguoiDung.html';
         }
     </script>
 </body>

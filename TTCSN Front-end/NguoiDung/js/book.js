@@ -41,6 +41,9 @@ async function displayBooks() {
         const cellNhaXuatBan = row.insertCell();
         cellNhaXuatBan.textContent = book.nxb;
 
+        const cellSoLuong=row.insertCell();
+        cellSoLuong.textContent=book.soLuong;
+
         const cellSoTrang = row.insertCell();
         cellSoTrang.textContent = book.soTrang;
 
