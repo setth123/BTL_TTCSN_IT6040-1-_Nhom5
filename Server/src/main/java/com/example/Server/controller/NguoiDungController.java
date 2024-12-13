@@ -63,7 +63,7 @@ public class NguoiDungController {
             return ndr.findAll();
         }
         // Nếu có từ khoá, tìm kiếm người dùng theo tên hoặc các thuộc tính khác
-        return ndr.findByHoTenContainingIgnoreCase(keyword); // Giả sử bạn tìm theo tên
+        return ndr.findByHoTenContainingIgnoreCase(keyword.replace('_',' ')); // Giả sử bạn tìm theo tên
     }
 
     @GetMapping("/{maNguoiDung}")

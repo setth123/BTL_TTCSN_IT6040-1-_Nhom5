@@ -1,5 +1,21 @@
 package com.example.Server.controller;
 
+import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
+import java.util.List;
+import java.util.Optional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
 import com.example.Server.dto.CheckRequest;
 import com.example.Server.dto.PhieuMuonRequest;
 import com.example.Server.entity.NguoiDung;
@@ -12,15 +28,6 @@ import com.example.Server.repository.PhieuViPhamRepository;
 import com.example.Server.repository.SachRepository;
 import com.example.Server.service.CheckTrangThaiService;
 import com.example.Server.service.PhieuMuonService;
-
-import java.time.LocalDateTime;
-import java.time.temporal.ChronoUnit;
-import java.util.List;
-import java.util.Optional;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
 
 @CrossOrigin(origins = "http://127.0.0.1:5500")
 @RestController
@@ -47,7 +54,6 @@ public class PhieuMuonController {
     public ResponseEntity<?> getDanhSachPhieuMuon() {
         // Lấy danh sách tất cả phiếu mượn từ cơ sở dữ liệu
         List<PhieuMuon> danhSachPhieuMuon = phieuMuonRepository.findAll();
-
         return ResponseEntity.ok(danhSachPhieuMuon);
     }
     @GetMapping("/{maND}")

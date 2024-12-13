@@ -29,7 +29,7 @@ public class SachService {
         List<Sach> sachList = sachRepository.findAll();
 
         if (keyword != null && !keyword.trim().isEmpty()) {
-            sachList = sachRepository.findByTenSachContainingIgnoreCase(keyword);
+            sachList = sachRepository.findByTenSachContainingIgnoreCase(keyword.replace('_',' '));
         }
         else sachList=sachRepository.findAll();
 

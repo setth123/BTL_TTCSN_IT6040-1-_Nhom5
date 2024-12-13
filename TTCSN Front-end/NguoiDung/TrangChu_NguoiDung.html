@@ -257,8 +257,8 @@
     <!-- Main Content Section -->
     <div class="content">
         <div class="search-bar">
-            <input type="text" placeholder="Nhập từ khóa...">
-            <button>
+            <input id="keyword" type="text" placeholder="Nhập từ khóa...">
+            <button onclick="openSearchList()">
                 <img src="https://img.icons8.com/material-outlined/24/ffffff/search.png" class="search-icon" alt="Tìm kiếm">
             </button>
         </div>
@@ -307,6 +307,15 @@
             localStorage.setItem('accountUsername', '');
             alert("Đã đăng xuất!");
             window.location.href = 'login.html'
+        }
+    </script>
+    <script>
+        function openSearchList(){
+            console.log('aa');
+            const keyword = document.getElementById('keyword').value;
+            const editedKeyword = keyword.replace(/ /g, "_");
+            localStorage.setItem('keyword', editedKeyword);
+            window.location.href = "SearchPage.html";
         }
     </script>
     <script src="js/index.js"></script>
