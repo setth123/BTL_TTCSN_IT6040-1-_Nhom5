@@ -132,7 +132,7 @@
             const accountUsername = localStorage.getItem('adminAccountUsername');
 
             // Nếu bất kỳ giá trị nào rỗng, chuyển hướng về trang đăng nhập
-            if (accountName === '' || !accountUsername === '') {
+            if (accountName === '' || accountUsername === '') {
                 alert('Bạn chưa đăng nhập. Vui lòng đăng nhập lại.');
                 window.location.href = 'Login_ThuThu.html';  // Thay bằng URL của trang đăng nhập
             } 
