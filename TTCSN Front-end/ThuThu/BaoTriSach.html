@@ -6,26 +6,22 @@
     <title>Bảo trì sách</title>
     <style>
         body {
+           
             font-family: Arial, sans-serif;
             margin: 0;
-            padding: 0;
+            padding: 20px;
             background-color: #f4f4f4;
         }
 
         header {
-            background-color: #0078d4;
-            color: white;
-            padding: 10px 20px;
+            margin-top: 20;
             display: flex;
             justify-content: space-between;
             align-items: center;
-        }
-
-        header h1 {
-            margin: 0;
-            font-size: 24px;
-            text-align: center;
-            flex-grow: 1;
+            padding: 10px 20px;
+            background-color: #0078d4;
+            color: white;
+            border-radius: 5px;
         }
 
         header button {
@@ -36,6 +32,14 @@
             cursor: pointer;
             border-radius: 4px;
         }
+
+        header h1 {
+            flex-grow: 1;
+            text-align: center;
+            margin: 0;
+            font-size: 35px;
+        }
+
 
         .container {
             padding: 20px;
@@ -124,11 +128,13 @@
 <body>
 
 <header>
+    
     <h1>Thư viện Đại học Công Nghiệp Hà Nội</h1>
     <button onclick="logout()">Đăng xuất</button>
 </header>
 
 <div class="container">
+    <button onclick="goBack()" style="margin-right: 20px;">Trở lại</button>
     <h2>Bảo trì sách</h2>
     <button class="btn add" onclick="showAddForm()">Thêm sách mới</button>
     <table>
@@ -312,29 +318,7 @@ async function showEditForm(bookId) {
         form['pages'].value = book.soTrang;
         form['author'].value = book.tacGia;
         form['category'].value = book.theLoai.tenTL;
-        // const categoryMapping = {
-        //         "Luận văn": "TL_1083849274625",
-        //         "Tạp chí": "TL_1490236813727",
-        //         "Sách tham khảo": "TL_1727346503472",
-        //         "Sách nghiên cứu khoa học": "TL_1820462842973",
-        //         "Sách giáo trình": "TL_1837284024842"
-        //     };
 
-        //     // Gán giá trị cho form['category']
-        //     if (book.maTheLoai) {
-        //         const mappedValue = Object.keys(categoryMapping).find(
-        //             key => categoryMapping[key] === book.maTheLoai
-        //         );
-        //         if (mappedValue) {
-        //             form['category'].value = mappedValue; // Gán tên thể loại
-        //         } else {
-        //             console.error('Mã thể loại không ánh xạ được:', book.maTheLoai);
-        //             form['category'].value = '';
-        //         }
-        //     } else {
-        //         console.error('Mã thể loại không tồn tại:', book);
-        //         form['category'].value = '';
-        //     }
         // Change form title and show the form
         document.getElementById('form-title').innerText = 'Sửa thông tin sách';
         document.getElementById('form-container').classList.add('active');
@@ -403,9 +387,14 @@ async function showEditForm(bookId) {
       document.getElementById('form-container').classList.remove('active');
   }
 
+    function goBack() {
+        window.location.href ='TrangChu_ThuThu.html'; // Quay lại trang trước đó
+    }
+
   // Thoát hệ thống
   function logout() {
-      window.location.href = '/logout'; // Thay đổi URL phù hợp với hệ thống của bạn
+    alert("Đã đăng xuất khỏi hệ thống");
+      window.location.href ='Login_ThuThu.html'; // Thay đổi URL phù hợp với hệ thống của bạn
   }
 
   fetchBooks();

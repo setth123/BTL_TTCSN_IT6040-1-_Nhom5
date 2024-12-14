@@ -124,7 +124,7 @@
             <button onclick="logout()">Đăng xuất</button>
         </div>
     </div>
-    <span id="backHome" class="back-arrow" onclick="backToHome()">←</span>
+    <button onclick="goBack()" style="margin: 20px;">Trở lại</button>
     <div class="table-container">
         <h2>Quản lý phiếu mượn</h2>
         <table id="borrowNote">
@@ -158,9 +158,9 @@
             alert("Đăng xuất thành công!");
             window.location.href = 'Login_ThuThu.html';
         }
-        function backToHome(){
-            window.location.href = 'TrangChu_ThuThu.html'
-        }
+        function goBack() {
+        window.location.href ='TrangChu_ThuThu.html'; // Quay lại trang trước đó
+    }
         
     </script>
     <script src="./js/borrowNoteMng.js"></script>
