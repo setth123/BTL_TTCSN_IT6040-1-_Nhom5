@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Page</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-image: url('../NguoiDung/image/anhnenthuvien.jpg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            margin: 0;
+        }
+        .container {
+            text-align: center;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 50px; /* Tăng padding để làm bảng dài hơn */
+            border-radius: 15px; /* Tăng độ cong của viền */
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3); /* Tăng độ bóng */
+            width: 350px; /* Đặt chiều rộng cho bảng */
+            border: 2px solid #007BFF; /* Thêm đường viền cho bảng */
+        }
+        .container h1 {
+            margin-bottom: 40px; /* Tăng khoảng cách giữa tiêu đề và nút */
+            font-size: 24px; /* Tăng kích thước tiêu đề */
+            color: #333;
+        }
+        .btn {
+            display: inline-block; /* Thay đổi thành inline-block để căn giữa */
+            width: 70%; /* Đặt chiều rộng của nút */
+            padding: 12px;
+            margin: 15px 0;
+            background: #007BFF;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 18px; /* Tăng kích thước nút */
+            transition: background 0.3s;
+        }
+        .btn:hover {
+            background: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Login</h1>
+        <button class="btn" onclick="location.href='../NguoiDung/login.html'">Đăng nhập</button>
+        <button class="btn" onclick="location.href='../ThuThu/Login_ThuThu.html'">Đăng nhập cho thủ thư</button>
+    </div>
+</body>
+</html>

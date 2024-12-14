@@ -171,12 +171,13 @@
         /* Table */
         .table-container {
             display: flex;
-            justify-content: space-between;
             margin-bottom: 20px;
+            justify-content: center;
+            text-align: center;
         }
 
         .table {
-            width: 48%;
+            width: 75%;
             background-color: white;
             border-radius: 5px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
@@ -184,7 +185,7 @@
         }
 
         table {
-            width: 80%;
+            width: 100%;
             border-collapse: collapse;
         }
 
@@ -194,7 +195,7 @@
 
         th, td {
             padding: 15px;
-            text-align: left;
+            text-align: center;
         }
 
         th {
@@ -220,18 +221,19 @@
 </head>
 <body>
     <script>
-        window.onload = function() {
-            const accountName = localStorage.getItem('accountName');
+        window.onload = async function() {
+            
             const accountUsername = localStorage.getItem('accountUsername');
 
             // Nếu bất kỳ giá trị nào rỗng, chuyển hướng về trang đăng nhập
-            if (accountName === '' || !accountUsername === '') {
+            if (accountName === '' || accountUsername === '') {
                 alert('Bạn chưa đăng nhập. Vui lòng đăng nhập lại.');
                 window.location.href = 'login.html';  // Thay bằng URL của trang đăng nhập
             } else {
                 // Nếu có giá trị, hiển thị chúng
-                document.getElementById('accountName').innerText = accountName;
+                document.getElementById('accountName').innerText = accountUsername;
             }
+            await insertDataIntoTable();
         }
     </script>
     <!-- Header Section -->
@@ -249,24 +251,15 @@
     <div class="nav">
         <a href="XemPhieuMuonViPham.html">Phiếu mượn/vi phạm</a>
         <a href="SachMuon.html">Sách</a>
-        <a href="#users">Người dùng</a>
-    </div>
+     </div>
 
     <!-- Main Content Section -->
     <div class="content">
         <div class="search-bar">
-            <input type="text" placeholder="Nhập từ khóa...">
-            <button>
+            <input id="keyword" type="text" placeholder="Nhập từ khóa...">
+            <button onclick="openSearchList()">
                 <img src="https://img.icons8.com/material-outlined/24/ffffff/search.png" class="search-icon" alt="Tìm kiếm">
             </button>
-        </div>
-
-        <!-- Stats Section -->
-        <div class="stats">
-            <div>Số sách: 10</div>
-            <div>Số người dùng: 10</div>
-            <div>Số người dùng đang vi phạm: 10</div>
-            <div>Số sách quá hạn: 10</div>
         </div>
 
         <!-- Image and Introduction Section -->
@@ -284,74 +277,12 @@
 
         <!-- Table Section -->
         <div class="table-container">
-            <div class="table">
-                <h2>Người dùng mới</h2>
-                <table>
-                    <tr>
-                        <th>Mã người dùng</th>
-                        <th>Họ tên</th>
-                        <th>Số điện thoại</th>
-                        <th>Tên tài khoản</th>
-                    </tr>
-                    <tr>
-                        <td>ND1</td>
-                        <td>Nguyễn Văn A</td>
-                        <td>0123456789</td>
-                        <td>TK_A</td>
-                    </tr>
-                    <tr>
-                        <td>ND2</td>
-                        <td>Nguyễn Thị B</td>
-                        <td>0284957372</td>
-                        <td>TK_B</td>
-                    </tr>
-                    <tr>
-                        <td>ND3</td>
-                        <td>Trần Văn C</td>
-                        <td>0385628573</td>
-                        <td>TK_C</td>
-                    </tr>
-                    <tr>
-                        <td>ND4</td>
-                        <td>Lê Văn D</td>
-                        <td>0385739243</td>
-                        <td>TK_D</td>
-                    </tr>
-                </table>
-            </div>
 
             <div class="table">
                 <h2>Sách mới</h2>
-                <table>
+                <table id="newBook">
                     <tr>
-                        <th>Mã sách</th>
-                        <th>Tên sách</th>
-                        <th>Thể loại</th>
-                        <th>Số lượng</th>
-                    </tr>
-                    <tr>
-                        <td>S1</td>
-                        <td>Sách A</td>
-                        <td>Giáo trình</td>
-                        <td>10</td>
-                    </tr>
-                    <tr>
-                        <td>S2</td>
-                        <td>Sách B</td>
-                        <td>Văn học</td>
-                        <td>5</td>
-                    </tr>
-                    <tr>
-                        <td>S3</td>
-                        <td>Sách C</td>
-                        <td>Khoa học</td>
-                        <td>8</td>
-                    </tr>
-                    <tr>
-                        <td>S4</td>
-                        <td>Sách D</td>
-                        <td>Công nghệ</td>
-                        <td>12</td>
+
                     </tr>
                 </table>
             </div>
@@ -376,6 +307,16 @@
             window.location.href = 'login.html'
         }
     </script>
+    <script>
+        function openSearchList(){
+            console.log('aa');
+            const keyword = document.getElementById('keyword').value;
+            const editedKeyword = keyword.replace(/ /g, "_");
+            localStorage.setItem('keyword', editedKeyword);
+            window.location.href = "SearchPage.html";
+        }
+    </script>
     <script src="js/index.js"></script>
+    
 </body>
 </html>

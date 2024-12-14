@@ -6,24 +6,22 @@
     <title>Bảo trì sách</title>
     <style>
         body {
+           
             font-family: Arial, sans-serif;
             margin: 0;
-            padding: 0;
+            padding: 20px;
             background-color: #f4f4f4;
         }
 
         header {
-            background-color: #0078d4;
-            color: white;
-            padding: 10px 20px;
+            margin-top: 20;
             display: flex;
             justify-content: space-between;
             align-items: center;
-        }
-
-        header h1 {
-            margin: 0;
-            font-size: 24px;
+            padding: 10px 20px;
+            background-color: #0078d4;
+            color: white;
+            border-radius: 5px;
         }
 
         header button {
@@ -34,6 +32,14 @@
             cursor: pointer;
             border-radius: 4px;
         }
+
+        header h1 {
+            flex-grow: 1;
+            text-align: center;
+            margin: 0;
+            font-size: 35px;
+        }
+
 
         .container {
             padding: 20px;
@@ -116,16 +122,19 @@
         .form-container button.cancel {
             background-color: #dc3545;
         }
+        
     </style>
 </head>
 <body>
 
 <header>
-    <h1>Thư viện Đại học Công Nghiệp</h1>
+    
+    <h1>Thư viện Đại học Công Nghiệp Hà Nội</h1>
     <button onclick="logout()">Đăng xuất</button>
 </header>
 
 <div class="container">
+    <button onclick="goBack()" style="margin-right: 20px;">Trở lại</button>
     <h2>Bảo trì sách</h2>
     <button class="btn add" onclick="showAddForm()">Thêm sách mới</button>
     <table>
@@ -144,32 +153,23 @@
             </tr>
         </thead>
         <tbody id="book-table">
-            <tr>
-                <td>S1</td>
-                <td>Sách A</td>
-                <td>Nhà xuất bản A</td>
-                <td>20/10/2023</td>
-                <td>10</td>
-                <td>50</td>
-                <td>Tác giả A</td>
-                <td>Thể loại 1</td>
-                <td><button class="btn edit" onclick="showEditForm('S1')">Sửa</button></td>
-                <td><button class="btn delete" onclick="deleteBook('S1')">Xóa</button></td>
-            </tr>
         </tbody>
     </table>
 
     <div id="form-container" class="form-container">
         <h3 id="form-title">Thêm sách mới</h3>
         <form id="book-form">
+            <!-- <label for="book-id">Mã sách:</label> -->
+            <!-- <input type="text" id="book-id" required> -->
+
             <label for="book-name">Tên sách:</label>
             <input type="text" id="book-name" required>
 
             <label for="publisher">Nhà xuất bản:</label>
             <input type="text" id="publisher" required>
 
-            <label for="release-date">Ngày phát hành:</label>
-            <input type="date" id="release-date" required>
+            <label for="release-date">Ngày phát hành:</label> 
+            <input type="datetime-local" id="release-date" required>
 
             <label for="quantity">Số lượng:</label>
             <input type="number" id="quantity" min="1" required>
@@ -190,55 +190,214 @@
 </div>
 
 <script>
-    function showAddForm() {
-        document.getElementById('form-title').innerText = 'Thêm sách mới';
+  const API_URL = 'http://localhost:8080/api/sach';
+  const CATEGORY_API_URL = 'http://localhost:8080/api/tl'; // Verify this is correct;
+
+  // Định dạng ngày theo dạng "dd/mm/yyyy"
+  function formatDate(dateString) {
+      const date = new Date(dateString);
+      const day = ("0" + date.getDate()).slice(-2);
+      const month = ("0" + (date.getMonth() + 1)).slice(-2);
+      const year = date.getFullYear();
+      return `${day}/${month}/${year}`;
+  }
+
+  // Lấy danh sách sách từ API và hiển thị lên bảng
+  async function fetchBooks() {
+      try {
+          const response = await fetch(API_URL);
+          const books = await response.json();
+          const table = document.getElementById('book-table');
+          table.innerHTML = ''; // Xóa bảng cũ
+
+          // Duyệt qua tất cả sách và hiển thị
+          for (let book of books) {
+              const categoryName = await getCategoryName(book.maTheLoai); // Lấy tên thể loại
+              const row = document.createElement('tr');
+              row.innerHTML = `
+                  <td>${book.maSach}</td>
+                  <td>${book.tenSach}</td>
+                  <td>${book.nxb}</td>
+                  <td>${formatDate(book.nph)}</td>
+                  <td>${book.soLuong}</td>
+                  <td>${book.soTrang}</td>
+                  <td>${book.tacGia}</td>
+                  <td>${categoryName}</td>
+                  <td><button class="btn edit" onclick="showEditForm('${book.maSach}')">Sửa</button></td>
+                  <td><button class="btn delete" onclick="deleteBook('${book.maSach}')">Xóa</button></td>
+              `;
+              table.appendChild(row);
+          }
+      } catch (error) {
+          console.error('Lỗi khi tải danh sách sách:', error);
+      }
+  }
+ // Lấy tên thể loại từ mã thể loại (API gọi này sẽ lấy từ mã thể loại)
+async function getCategoryName(maTheLoai) {
+    try {
+        const response = await fetch(`${CATEGORY_API_URL}/${maTheLoai}`);
+        if (!response.ok) throw new Error(`API lỗi: ${response.status}`);
+        const category = await response.json();
+        return category.tenTL || 'Không xác định'; // Đảm bảo có giá trị fallback
+    } catch (error) {
+        console.error('Lỗi khi lấy tên thể loại:', error);
+        return 'Không xác định'; // Trả về giá trị mặc định nếu có lỗi
+    }
+}
+
+  // Hiển thị form thêm sách
+  function showAddForm() {
+      document.getElementById('form-title').innerText = 'Thêm sách mới';
+      document.getElementById('form-container').classList.add('active');
+      document.getElementById('book-form').reset();
+      document.getElementById('book-form').removeEventListener('submit', updateBook); // Xóa sự kiện sửa
+      document.getElementById('book-form').addEventListener('submit', addBook); // Thêm sự kiện cho form thêm
+  }
+
+  // Lấy dữ liệu từ form
+  function getFormData() {
+      const form = document.getElementById('book-form');
+      const releaseDate = form['release-date'].value; // Lấy dữ liệu ngày phát hành
+      const formattedDate = new Date(releaseDate).toISOString().split('T')[0] + 'T00:00:00';
+
+      return { 
+          tenSach: form['book-name'].value,
+          nxb: form['publisher'].value,
+          nph: formattedDate, // Định dạng ngày phát hành
+          soLuong: form['quantity'].value,
+          soTrang: form['pages'].value,
+          tacGia: form['author'].value,
+          maTheLoai: form['category'].value
+      };
+  }
+
+  // Thêm sách mới
+  async function addBook(event) {
+      event.preventDefault(); // Ngăn form nạp lại trang
+      const book = getFormData();
+      if (!book.nxb || !book.nph || !book.soLuong || !book.soTrang || !book.tacGia || !book.maTheLoai) {
+          alert('Vui lòng nhập đầy đủ thông tin sách!');
+          return;
+      }
+
+      try {
+          const response = await fetch(API_URL, {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify(book)
+          });
+
+          if (response.ok) {
+              const data = await response.json();
+              alert("Sách đã được thêm thành công!");
+              fetchBooks(); // Cập nhật danh sách sách
+          } else {
+              const errorData = await response.json();
+              alert("Lỗi: " + errorData.message);
+          }
+      } catch (error) {
+          alert('Có lỗi xảy ra khi thêm sách!');
+          console.error(error);
+      }
+  }
+
+// Hiển thị form sửa sách
+async function showEditForm(bookId) {
+    try {
+        // Fetch the book details using its ID
+        const response = await fetch(`http://localhost:8080/api/sach/id/${bookId}`);
+        const book = await response.json();
+
+        // Populate form fields with book data
+        const form = document.getElementById('book-form');
+       // form['book-id'].value = book.maSach;
+        form['book-name'].value = book.tenSach;
+        form['publisher'].value = book.nxb;
+        form['release-date'].value = book.nph ? new Date(book.nph).toISOString().slice(0, 16) : '';
+        form['quantity'].value = book.soLuong;
+        form['pages'].value = book.soTrang;
+        form['author'].value = book.tacGia;
+        form['category'].value = book.theLoai.tenTL;
+
+        // Change form title and show the form
+        document.getElementById('form-title').innerText = 'Sửa thông tin sách';
         document.getElementById('form-container').classList.add('active');
-        document.getElementById('book-form').reset();
-        document.getElementById('form-submit').onclick = function () {
-            addBook();
-        };
+
+        // Remove the addBook event listener and add updateBook event listener
+        form.removeEventListener('submit', addBook);
+        form.addEventListener('submit', (event) => updateBook(event, bookId)); // Bind updateBook to the submit event
+    } catch (error) {
+        console.error('Lỗi khi lấy dữ liệu sách:', error);
+        alert('Không thể tải dữ liệu sách!');
+    }
+}
+
+
+
+  // Cập nhật sách
+  async function updateBook(event, bookId) {
+      event.preventDefault();
+      const book = getFormData();
+      if (!book.tenSach || !book.nxb || !book.nph || !book.soLuong || !book.soTrang || !book.tacGia || !book.maTheLoai) {
+          alert('Vui lòng nhập đầy đủ thông tin sách!');
+          return;
+      }
+
+      try {
+          const response = await fetch(`${API_URL}/${bookId}`, {
+              method: 'PUT',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify(book)
+          });
+
+          if (response.ok) {
+              alert('Sách đã được cập nhật thành công!');
+              fetchBooks(); // Cập nhật danh sách sách
+              hideForm();
+          } else {
+              const errorData = await response.json();
+              alert("Lỗi: " + errorData.message);
+          }
+      } catch (error) {
+          alert('Có lỗi xảy ra khi cập nhật sách!');
+          console.error(error);
+      }
+  }
+
+  // Xóa sách
+  async function deleteBook(bookId) {
+      const confirmed = confirm("Bạn có chắc chắn muốn xóa sách này?");
+      if (confirmed) {
+          try {
+              const response = await fetch(`${API_URL}/${bookId}`, { method: 'DELETE' });
+              if (response.ok) {
+                  alert('Sách đã được xóa!');
+                  fetchBooks(); // Cập nhật danh sách sách
+              } else {
+                  alert('Không thể xóa sách!');
+              }
+          } catch (error) {
+              console.error('Lỗi khi xóa sách:', error);
+              alert('Có lỗi xảy ra khi xóa sách!');
+          }
+      }
+  }
+  // Ẩn form
+  function hideForm() {
+      document.getElementById('form-container').classList.remove('active');
+  }
+
+    function goBack() {
+        window.location.href ='TrangChu_ThuThu.html'; // Quay lại trang trước đó
     }
 
-    function showEditForm(bookId) {
-        document.getElementById('form-title').innerText = 'Cập nhật thông tin sách';
-        document.getElementById('form-container').classList.add('active');
-        // Mock data loading
-        document.getElementById('book-name').value = 'Sách A';
-        document.getElementById('publisher').value = 'Nhà xuất bản A';
-        document.getElementById('release-date').value = '2023-10-20';
-        document.getElementById('quantity').value = '10';
-        document.getElementById('pages').value = '50';
-        document.getElementById('author').value = 'Tác giả A';
-        document.getElementById('category').value = 'Thể loại 1';
-        document.getElementById('form-submit').onclick = function () {
-            updateBook(bookId);
-        };
-    }
+  // Thoát hệ thống
+  function logout() {
+    alert("Đã đăng xuất khỏi hệ thống");
+      window.location.href ='Login_ThuThu.html'; // Thay đổi URL phù hợp với hệ thống của bạn
+  }
 
-    function hideForm() {
-        document.getElementById('form-container').classList.remove('active');
-    }
-
-    function addBook() {
-        alert('Thêm sách thành công!');
-        hideForm();
-    }
-
-    function updateBook(bookId) {
-        alert('Cập nhật sách ' + bookId + ' thành công!');
-        hideForm();
-    }
-
-    function deleteBook(bookId) {
-        if (confirm('Bạn có chắc chắn muốn xóa sách ' + bookId + '?')) {
-            alert('Xóa sách ' + bookId + ' thành công!');
-        }
-    }
-
-    function logout() {
-        alert('Đăng xuất thành công!');
-    }
+  fetchBooks();
 </script>
-
 </body>
 </html>

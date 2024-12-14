@@ -18,6 +18,7 @@
             text-align: center;
             border-radius: 5px;
             position: relative;
+            
         }
         .header h1 {
             margin: 0;
@@ -108,19 +109,25 @@
             background-color: #6c757d;
             color: white;
         }
+        .back-arrow {
+            cursor: pointer;
+            font-size: 24px;
+            font-family: Arial, sans-serif;
+        }
     </style>
 </head>
 <body>
     <div class="header">
         <h1>Thư viện Đại học Công nghiệp</h1>
         <div class="profile">
-            <span>Thủ thư A</span>
+            <span>Admin</span>
             <button onclick="logout()">Đăng xuất</button>
         </div>
     </div>
+    <button onclick="goBack()" style="margin: 20px;">Trở lại</button>
     <div class="table-container">
         <h2>Quản lý phiếu mượn</h2>
-        <table>
+        <table id="borrowNote">
             <thead>
                 <tr>
                     <th>Mã phiếu mượn</th>
@@ -129,37 +136,11 @@
                     <th>Số lượng mượn</th>
                     <th>Mã người dùng</th>
                     <th>Mã sách</th>
-                    <th>Trạng thái</th>
+                    <th>Hành động</th>
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td>PM1</td>
-                    <td>04/11/2024</td>
-                    <td>Chưa trả</td>
-                    <td>1</td>
-                    <td>ND1</td>
-                    <td>MS1</td>
-                    <td><button class="btn-tra" onclick="openModal()">Trả sách</button></td>
-                </tr>
-                <tr>
-                    <td>PM2</td>
-                    <td>30/11/2024</td>
-                    <td>Chưa trả</td>
-                    <td>2</td>
-                    <td>ND2</td>
-                    <td>MS2</td>
-                    <td><button class="btn-tra" onclick="openModal()">Trả sách</button></td>
-                </tr>
-                <tr>
-                    <td>PM3</td>
-                    <td>15/12/2024</td>
-                    <td>Chưa trả</td>
-                    <td>1</td>
-                    <td>ND3</td>
-                    <td>MS3</td>
-                    <td><button class="btn-tra" onclick="openModal()">Trả sách</button></td>
-                </tr>
+                
             </tbody>
         </table>
     </div>
@@ -175,27 +156,13 @@
     <script>
         function logout() {
             alert("Đăng xuất thành công!");
+            window.location.href = 'Login_ThuThu.html';
         }
-
-        function openModal() {
-            document.getElementById("myModal").style.display = "block";
-        }
-
-        function closeModal() {
-            document.getElementById("myModal").style.display = "none";
-        }
-
-        function confirmReturn() {
-            alert("Sách đã được trả thành công!");
-            closeModal();
-        }
-
-        // Đóng modal khi nhấn ra ngoài
-        window.onclick = function(event) {
-            if (event.target == document.getElementById("myModal")) {
-                closeModal();
-            }
-        }
+        function goBack() {
+        window.location.href ='TrangChu_ThuThu.html'; // Quay lại trang trước đó
+    }
+        
     </script>
+    <script src="./js/borrowNoteMng.js"></script>
 </body>
 </html>

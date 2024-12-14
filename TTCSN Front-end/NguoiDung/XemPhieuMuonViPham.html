@@ -67,52 +67,44 @@
         button:hover {
             background-color: #0056b3;
         }
+        .back-arrow {
+            cursor: pointer;
+            font-size: 24px;
+            font-family: Arial, sans-serif;
+        }
     </style>
 </head>
 <body>
-
+    <script>
+        window.onload = ()=>{
+            document.getElementById('accountName').innerText = localStorage.getItem('accountUsername')
+        }
+    </script>
     <div class="header">
         <div class="header-title">
             <h1>Thư viện Đại học Công Nghiệp</h1>
         </div>
         <div class="user-info">
             <img src="https://img.icons8.com/ios-filled/50/000000/user.png" alt="User Icon">
-            <span>User A</span>
+            <span id="accountName"></span>
             <button onclick="logout()">Đăng xuất</button>
         </div>
     </div>
-
+    <span id="backHome" class="back-arrow" onclick="backToHome()">←</span>
     <div class="container">
         <h2>Danh sách phiếu mượn</h2>
-        <table>
-            <tr>
-                <th>STT</th>
-                <th>Mã phiếu mượn</th>
-                <th>Tên sách</th>
-                <th>Thời gian mượn</th>
-                <th>Số lượng mượn</th>
-            </tr>
-            <tr>
-                <td>1</td>
-                <td>PM01</td>
-                <td>Lập trình Java</td>
-                <td>5 ngày</td>
-                <td>1</td>
-            </tr>
-            <tr>
-                <td>2</td>
-                <td>PM02</td>
-                <td>Nguyên lý hệ điều hành</td>
-                <td>3 ngày</td>
-                <td>1</td>
-            </tr>
-            <tr>
-                <td>3</td>
-                <td>PM03</td>
-                <td>Chỉ thị điều khiển</td>
-                <td>3 ngày</td>
-                <td>1</td>
-            </tr>
+        <table id="borrow">
+            <thead>
+                <tr>
+                    <th>STT</th>
+                    <th>Mã phiếu mượn</th>
+                    <th>Tên sách</th>
+                    <th>Thời hạn</th>
+                    <th>Số lượng mượn</th>
+                    <th>Trạng thái</th>
+                </tr>
+            </thead>
+            
         </table>
     </div>
 
@@ -123,24 +115,24 @@
                 <th>STT</th>
                 <th>Mã phiếu vi phạm</th>
                 <th>Tên sách</th>
-                <th>Thời gian mượn</th>
+                <th>Số ngày quá hạn</th>
                 <th>Phí phạt</th>
-            </tr>
-            <tr>
-                <td>1</td>
-                <td>VP01</td>
-                <td>Chỉ thị điều khiển</td>
-                <td>3 ngày</td>
-                <td>7000 VND</td>
+                <th>Trạng thái</th>
             </tr>
         </table>
     </div>
 
     <script>
         function logout() {
-            alert('Đã đăng xuất!');
+            localStorage.setItem('accountName', '');
+            localStorage.setItem('accountUsername', '');
+            alert("Đã đăng xuất!");
+            window.location.href = 'login.html'
+        }
+        function backToHome(){
+            window.location.href = 'TrangChu_ThuThu.html'
         }
     </script>
-
+    <script src="./js/BorrowAndViolation.js"></script>
 </body>
 </html>

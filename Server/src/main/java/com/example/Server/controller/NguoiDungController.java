@@ -63,7 +63,12 @@ public class NguoiDungController {
             return ndr.findAll();
         }
         // Nếu có từ khoá, tìm kiếm người dùng theo tên hoặc các thuộc tính khác
-        return ndr.findByHoTenContainingIgnoreCase(keyword); // Giả sử bạn tìm theo tên
+        return ndr.findByHoTenContainingIgnoreCase(keyword.replace('_',' ')); // Giả sử bạn tìm theo tên
+    }
+
+    @GetMapping("/{maNguoiDung}")
+    public NguoiDung findNDbyID(@PathVariable String maNguoiDung){
+        return ndr.findById(maNguoiDung).orElse(null);
     }
     @PutMapping("/{maNguoiDung}/{state}")
     public List<NguoiDung> setVP(@PathVariable String maNguoiDung, @PathVariable String state){

@@ -12,7 +12,7 @@
             padding: 20px;
         }
         .header {
-            background-color: #007bff;
+            background-color: #398ce5;
             color: white;
             padding: 10px;
             text-align: center;
@@ -36,7 +36,7 @@
         .profile button {
             padding: 5px 10px;
             background-color: #fff;
-            color: #007bff;
+            color: #3972ae;
             border: none;
             border-radius: 5px;
             cursor: pointer;
@@ -62,7 +62,7 @@
             text-align: left;
         }
         th {
-            background-color: #007bff;
+            background-color: #3a87d8;
             color: white;
         }
         .btn-thanh-toan {
@@ -108,16 +108,22 @@
             background-color: #6c757d;
             color: white;
         }
+        .back-arrow {
+            cursor: pointer;
+            font-size: 24px;
+            font-family: Arial, sans-serif;
+        }
     </style>
 </head>
 <body>
     <div class="header">
         <h1>Thư viện Đại học Công nghiệp</h1>
         <div class="profile">
-            <span>Thủ thư A</span>
+            <span>Admin</span>
             <button onclick="logout()">Đăng xuất</button>
         </div>
     </div>
+    <button onclick="goBack()" style="margin: 20px;">Trở lại</button>
     <div class="table-container">
         <h2>Quản lý phiếu vi phạm</h2>
         <table>
@@ -132,30 +138,7 @@
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td>VP1</td>
-                    <td>500.000</td>
-                    <td>5</td>
-                    <td>Chưa thanh toán</td>
-                    <td>PM1</td>
-                    <td><button class="btn-thanh-toan" onclick="openModal()">Thanh toán</button></td>
-                </tr>
-                <tr>
-                    <td>VP2</td>
-                    <td>300.000</td>
-                    <td>3</td>
-                    <td>Chưa thanh toán</td>
-                    <td>PM2</td>
-                    <td><button class="btn-thanh-toan" onclick="openModal()">Thanh toán</button></td>
-                </tr>
-                <tr>
-                    <td>VP3</td>
-                    <td>700.000</td>
-                    <td>7</td>
-                    <td>Chưa thanh toán</td>
-                    <td>PM3</td>
-                    <td><button class="btn-thanh-toan" onclick="openModal()">Thanh toán</button></td>
-                </tr>
+                
             </tbody>
         </table>
     </div>
@@ -192,6 +175,9 @@
                 closeModal();
             }
         }
+        function goBack() {
+        window.location.href ='TrangChu_ThuThu.html'; // Quay lại trang trước đó
+    }
     </script>
 </body>
 </html>

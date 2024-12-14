@@ -17,11 +17,11 @@ public class SachDTO {
     private String tacGia;
     private String maTheLoai; // Chỉ lưu mã thể loại
 
+    private static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss");
     public SachDTO(String maSach, String tenSach, String nxb, String nph, Integer soLuong, Integer soTrang, String tacGia, String maTheLoai) {
         this.maSach = maSach;
         this.tenSach = tenSach;
         this.nxb = nxb;
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss");
         this.nph = LocalDateTime.parse(nph, formatter);
         this.soLuong = soLuong;
         this.soTrang = soTrang;
