@@ -83,7 +83,11 @@
     </style>
 </head>
 <body>
-
+    <script>
+        window.onload = async function (){
+            if(localStorage.getItem('accountUsername'))window.location.href='TrangChu_NguoiDung.html';
+        }
+    </script>
     <div class="container">
         <h1 style="margin-top: 30px; color: #0056b3;">Đăng nhập</h1>
         <form id="loginForm">

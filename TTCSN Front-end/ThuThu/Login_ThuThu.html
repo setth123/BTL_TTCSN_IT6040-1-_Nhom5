@@ -72,6 +72,11 @@
     </style>
 </head>
 <body>
+    <script>
+        window.onload = async function (){
+            if(localStorage.getItem('accountUsername'))window.location.href='TrangChu_ThuThu.html';
+        }
+    </script>
     <div class="login-container">
         <img src="image/anhthuvien.png"Hanoi University of Industry">
         <h2>Đăng nhập (Thủ thư)</h2>

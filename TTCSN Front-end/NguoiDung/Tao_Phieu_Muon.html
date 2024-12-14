@@ -97,6 +97,47 @@
             background-color: #6f6d6d;
         }
 
+        #customConfirm {
+      display: none;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background-color: white;
+      border: 1px solid #ccc;
+      padding: 20px;
+      box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+      z-index: 1000;
+    }
+
+    /* Overlay */
+    #overlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.5);
+      z-index: 999;
+    }
+
+    /* Nút */
+    .button {
+      padding: 10px 20px;
+      margin: 5px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    .confirm-button {
+      background-color: #28a745;
+      color: white;
+    }
+    .cancel-button {
+      background-color: #dc3545;
+      color: white;
+    }
         
     </style>
 </head>
@@ -109,54 +150,72 @@
     </script>
     <div class="container hidden" id="loanForm">
         <h2>Tạo phiếu mượn</h2>
-        <div class="loan-form">
-            <div>
-                <label for="loanId">Mã phiếu mượn:</label>
-                <input type="text" id="loanId" value="PM_01" readonly>
+        <div class="loan-form" >
+            <div style="display: flex; gap: 5%;">
+                <div >
+                    <div>
+                        <label for="bookId">Mã sách:</label>
+                        <input type="text" id="bookId" readonly>
+                    </div>
+                    <div>
+                        <label for="loanDuration">Thời hạn mượn:</label>
+                        <input type="text" id="loanDuration" value="7 ngày" readonly>
+                    </div>
+                </div>
+                <div>
+                    <div>
+                        <label for="bookName">Tên sách:</label>
+                        <input type="text" id="bookName" readonly>
+                    </div>
+                    <div>
+                        <label for="loanNumber">Số lượng mượn</label>
+                        <input type="number" id="loanNumber" value="1">
+                    </div>
+                </div>
             </div>
-            <div>
-                <label for="bookId">Mã sách:</label>
-                <input type="text" id="bookId" readonly>
+            <div style="display: flex; gap: 5%;">
+                <button id="create" onclick="confirmLoan()">Tạo phiếu</button>
             </div>
-            <div>
-                <label for="loanDuration">Thời hạn mượn:</label>
-                <input type="text" id="loanDuration" value="7 ngày" readonly>
-            </div>
-            <div>
-                <label for="bookName">Tên sách:</label>
-                <input type="text" id="bookName" readonly>
-            </div>
-            <div>
-                <label for="loanNumber">Số lượng mượn</label>
-                <input type="number" id="loanNumber">
-            </div>
-            <button id="create" onclick="confirmLoan()">Tạo phiếu</button>
-            <button id="cancel" onclick="cancelLoan()">Hủy</button>
+        </div>
+        <div id="overlay"></div>
+
+        <div id="customConfirm">
+        <p>Xác nhận tạo phiếu mượn ?</p>
+        <button class="button confirm-button" id="confirmBtn">Đồng ý</button>
+        <button class="button cancel-button" id="cancelBtn">Hủy</button>
         </div>
     </div>
     <script>
         async function confirmLoan() {
-            const maND = localStorage.getItem('accountName');
-            const soLuong = document.getElementById('loanNumber').value;
-            const maSach = localStorage.getItem('selectedId');
-            const loanCardData = {
-                maSach : maSach,
-                soLuongMuon : soLuong,
-                maNguoiDung : maND
-            }
-            const response = await fetch('http://localhost:8080/phieu-muon/create', {
-                method : 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(loanCardData)
-            });
-            const data = await response.text();
-            console.log(typeof(data))
-            if(data){
-                alert(data);
-                window.location.href = 'SachMuon.html';
-            }
+            document.getElementById('customConfirm').style.display = 'block';
+            document.getElementById('overlay').style.display = 'block';
+            const confirmBtn=document.getElementById('confirmBtn');
+            customConfirm.addEventListener('click',async(event)=>{
+                if(event.target===confirmBtn){
+                        const maND = localStorage.getItem('accountName');
+                        const soLuong = document.getElementById('loanNumber').value;
+                        const maSach = localStorage.getItem('selectedId');
+                        const loanCardData = {
+                            maSach : maSach,
+                            soLuongMuon : soLuong,
+                            maNguoiDung : maND
+                        }
+                        const response = await fetch('http://localhost:8080/phieu-muon/create', {
+                            method : 'POST',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify(loanCardData)
+                        });
+                        const data = await response.text();
+                        console.log(typeof(data))
+                        if(data){
+                            alert(data);
+                            window.location.href = 'SachMuon.html';
+                        }
+                }
+            })
+            
         }
         function cancelLoan() {
             localStorage.setItem('selectedBook', '');
