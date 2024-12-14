@@ -32,19 +32,16 @@ public class PhieuMuonService {
         if (!nguoiDungOpt.isPresent()) {
             return ResponseEntity.badRequest().body("Người dùng không tồn tại.");
         }
-
         // Kiểm tra sách có tồn tại không
         Optional<Sach> sachOpt = sachRepository.findById(maSach);
         if (!sachOpt.isPresent()) {
             return ResponseEntity.badRequest().body("Sách không tồn tại.");
         }
-
         // Kiểm tra số lượng sách có đủ không
         Sach sach = sachOpt.get();
         if (sach.getSoLuong() < soLuong) {
             return ResponseEntity.badRequest().body("Số lượng sách không đủ.");
         }
-
         // Tạo phiếu mượn mới
         PhieuMuon phieuMuon = new PhieuMuon();
         phieuMuon.setMaPM("PM" + System.currentTimeMillis()); // Tạo mã phiếu mượn với thời gian hiện tại
@@ -53,14 +50,11 @@ public class PhieuMuonService {
         phieuMuon.setSoLuongMuon(soLuong);
         phieuMuon.setNguoiDung(nguoiDungOpt.get());
         phieuMuon.setSach(sach);
-
         // Lưu phiếu mượn vào cơ sở dữ liệu
         phieuMuonRepository.save(phieuMuon);
-
         // Trừ số lượng sách trong kho
         sach.setSoLuong(sach.getSoLuong() - soLuong);
         sachRepository.save(sach);
-
         // Trả về phản hồi thành công
         return ResponseEntity.ok("Tạo phiếu mượn thành công.");
     }
