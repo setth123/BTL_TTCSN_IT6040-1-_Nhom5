@@ -58,7 +58,30 @@
             background-color: #003f8b;
         }
 
+        .nav {
+            background-color: #003f8b;
+            overflow: hidden;
+            margin: 0 20px; /* Khoảng cách 20px ở hai bên */
+            margin-bottom: 20px;
+            border-radius: 8px; /* Bo góc cho thanh điều hướng */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Thêm bóng đổ */
+        }
 
+        .nav a {
+            float: left;
+            display: block;
+            color: white;
+            text-align: center;
+            padding: 15px 20px; /* Tăng padding cho các liên kết */
+            text-decoration: none;
+            transition: background-color 0.3s, transform 0.3s; /* Hiệu ứng chuyển động */
+        }
+
+        .nav a:hover {
+            background-color: #0056b3; /* Màu nền khi hover */
+            transform: scale(1.05); /* Tăng kích thước nhẹ khi hover */
+            border-radius: 5px; /* Bo góc cho hiệu ứng hover */
+        }
         h1 {
             text-align: center;
             margin-top: 20px;
@@ -66,7 +89,7 @@
         }
 
         #bookList, #availableBook {
-            width: 90%;
+            width: calc(100% - 40px);
             margin: 20px auto;
             background: #fff;
             border-radius: 8px;
@@ -146,7 +169,6 @@
             display: flex;
             justify-content: flex-end;
             margin-bottom: 20px;
-            margin-top: 20px;
             margin-right: 20px;
         }
 
@@ -173,6 +195,7 @@
         .back-arrow {
             cursor: pointer;
             font-size: 24px;
+            margin-left: 20px;
             font-family: Arial, sans-serif;
         }
     </style>
@@ -184,7 +207,6 @@
         }
     </script>
     <div class="header">
-        <span id="backHome" class="back-arrow" onclick="backToHome()">←</span>
         <h1>Thư viện Đại học Công nghiệp</h1>
         <div class="profile">
             <img src="https://img.icons8.com/ios-filled/30/ffffff/user.png" alt="Profile">
@@ -192,6 +214,11 @@
             <button onclick="logout()">Đăng xuất</button>
         </div>
     </div>
+    <div class="nav">
+        <a href="XemPhieuMuonViPham.html">Phiếu mượn/vi phạm</a>
+        <a href="SachMuon.html">Sách</a>
+     </div>
+    <span id="backHome" class="back-arrow" onclick="backToHome()">←</span>
     <div class="search-bar">
         <input id="keyword" type="text" placeholder="Nhập từ khóa...">
         <button onclick="openSearchList()">
@@ -218,7 +245,7 @@
                 </tr>
             </thead>
             <tbody>
-                <!-- Nội dung sẽ được tạo động bằng JS -->
+                
             </tbody>
         </table>
     </div>

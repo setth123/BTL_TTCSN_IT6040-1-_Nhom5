@@ -78,19 +78,6 @@
         .search-bar button:hover {
             background-color: #0056b3;
         }
-        .stats {
-            display: flex;
-            justify-content: space-around;
-            margin-bottom: 20px;
-        }
-        .stats div {
-            background-color: #007bff;
-            color: white;
-            padding: 20px;
-            border-radius: 5px;
-            text-align: center;
-            width: 23%;
-        }
         .table-container {
             display: flex;
             justify-content: space-between;
@@ -189,8 +176,7 @@
     </div>
     <script>
         function logout() {
-            localStorage.setItem('adminAccountID', '');
-            localStorage.setItem('adminAccountUsername', '');
+            localStorage.clear();
             alert("Đăng xuất thành công!");
         }
 

@@ -6,55 +6,110 @@
     <title>Thư viện Trường Đại học Công Nghiệp Hà Nội</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Roboto', sans-serif;
+            background-color: aliceblue;
+            color: #333;
             margin: 0;
-            padding: 20px;
-            background-color: #f4f4f4;
+            padding: 0;
         }
-        h1 {
-            text-align: center;
-            margin-bottom: 20px;
-        }
+
+        /* Header */
         .header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
-        }
-        .header-title {
-            flex: 1;
+            background-color:azure;
+            color: darkslateblue;
+            padding: 20px;
+            
             text-align: center;
+            position: relative;
+            
         }
-        .user-info {
-            display: flex;
-            align-items: center;
+        .header img {
+            width: 30%; /* Giảm kích thước ảnh */
+            max-width: 300px; /* Đặt kích thước tối đa */
+            vertical-align: middle;
         }
-        .user-info img {
+        .header h1 {
+            display: inline;
+            margin-left: 10px;
+            vertical-align: middle;
+        }
+        .header .profile {
+            position: absolute;
+            right: 20px;
+            top: 20px;
+        }
+        .header .profile img {
             width: 30px;
-            height: 30px;
-            margin-right: 10px;
+            vertical-align: middle;
+        }
+        .header .profile span {
+            margin-left: 10px;
+            vertical-align: middle;
+        }
+        .header button {
+            background-color: #0056b3;
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        .header button:hover {
+            background-color: #003f8b;
+        }
+
+        /* Navigation Bar */
+        .nav {
+            background-color: #003f8b;
+            overflow: hidden;
+            
+            margin: 0 20px; /* Khoảng cách 20px ở hai bên */
+            border-radius: 8px; /* Bo góc cho thanh điều hướng */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Thêm bóng đổ */
+        }
+
+        .nav a {
+            float: left;
+            display: block;
+            color: white;
+            text-align: center;
+            padding: 15px 20px; /* Tăng padding cho các liên kết */
+            text-decoration: none;
+            transition: background-color 0.3s, transform 0.3s; /* Hiệu ứng chuyển động */
+        }
+
+        .nav a:hover {
+            background-color: #0056b3; /* Màu nền khi hover */
+            transform: scale(1.05); /* Tăng kích thước nhẹ khi hover */
+            border-radius: 5px; /* Bo góc cho hiệu ứng hover */
         }
         .container {
             background: white;
             padding: 20px;
             border-radius: 8px;
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-            margin-bottom: 20px;
+            margin: 20px;
         }
         table {
             width: 100%;
             border-collapse: collapse;
-            margin-bottom: 20px;
+            margin-top: 20px;
+            background-color: white;
+            border-radius: 8px;
+            overflow: hidden;
         }
+
         th, td {
             padding: 10px;
-            border: 1px solid #ccc;
             text-align: left;
+            border-bottom: 1px solid #ddd;
         }
+
         th {
             background-color: #007bff;
             color: white;
         }
+
         button {
             padding: 10px 15px;
             background-color: #007bff;
@@ -71,6 +126,7 @@
             cursor: pointer;
             font-size: 24px;
             font-family: Arial, sans-serif;
+            margin-left: 20px;
         }
     </style>
 </head>
@@ -81,15 +137,20 @@
         }
     </script>
     <div class="header">
-        <div class="header-title">
-            <h1>Thư viện Đại học Công Nghiệp</h1>
-        </div>
-        <div class="user-info">
-            <img src="https://img.icons8.com/ios-filled/50/000000/user.png" alt="User Icon">
+        
+        <h1>Thư viện Đại học Công nghiệp</h1>
+        <div class="profile">
+            <img src="https://img.icons8.com/ios-filled/30/ffffff/user.png" alt="Profile">
             <span id="accountName"></span>
             <button onclick="logout()">Đăng xuất</button>
         </div>
     </div>
+
+    <!-- Navigation Bar -->
+    <div class="nav">
+        <a href="XemPhieuMuonViPham.html">Phiếu mượn/vi phạm</a>
+        <a href="SachMuon.html">Sách</a>
+     </div>
     <span id="backHome" class="back-arrow" onclick="backToHome()">←</span>
     <div class="container">
         <h2>Danh sách phiếu mượn</h2>
@@ -130,7 +191,7 @@
             window.location.href = 'login.html'
         }
         function backToHome(){
-            window.location.href = 'TrangChu_ThuThu.html'
+            window.location.href = 'TrangChu_NguoiDung.html'
         }
     </script>
     <script src="./js/BorrowAndViolation.js"></script>

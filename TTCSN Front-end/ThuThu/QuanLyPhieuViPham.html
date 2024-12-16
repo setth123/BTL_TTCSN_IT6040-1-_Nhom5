@@ -9,41 +9,32 @@
             font-family: Arial, sans-serif;
             background-color: #f0f0f0;
             margin: 0;
-            padding: 20px;
+            padding: 0;
         }
         .header {
-            background-color: #398ce5;
+            background-color: #007bff;
             color: white;
-            padding: 10px;
+            padding: 10px 0;
             text-align: center;
-            border-radius: 5px;
-            position: relative;
         }
+       
         .header h1 {
-            margin: 0;
+            display: inline;
+            margin-left: 20px;
+            vertical-align: middle;
+            
         }
-        .profile {
-            position: absolute;
-            right: 20px;
-            top: 10px;
-            display: flex;
-            align-items: center;
+        .header .profile {
+            float: right;
+            margin-right: 20px;
         }
-        .profile span {
-            margin-right: 10px;
-            font-weight: bold;
+        .header .profile img {
+            width: 30px;
+            vertical-align: middle;
         }
-        .profile button {
-            padding: 5px 10px;
-            background-color: #fff;
-            color: #3972ae;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
-        .profile button:hover {
-            background-color: #e6e6e6;
+        .header .profile span {
+            margin-left: 10px;
+            vertical-align: middle;
         }
         .table-container {
             margin-top: 20px;
@@ -55,16 +46,23 @@
         table {
             width: 100%;
             border-collapse: collapse;
+            margin-top: 20px;
+            background-color: white;
+            border-radius: 8px;
+            overflow: hidden;
         }
+
         th, td {
             padding: 10px;
-            border: 1px solid #ccc;
             text-align: left;
+            border-bottom: 1px solid #ddd;
         }
+
         th {
-            background-color: #3a87d8;
+            background-color: #0078d4;
             color: white;
         }
+
         .btn-thanh-toan {
             background-color: #28a745;
             color: white;
@@ -108,25 +106,60 @@
             background-color: #6c757d;
             color: white;
         }
-        .back-arrow {
-            cursor: pointer;
-            font-size: 24px;
-            font-family: Arial, sans-serif;
+        #thanhtoan{
+            background: none; 
+            border: none; 
+            color: #007BFF; 
+            font-size: 16px; 
+            cursor: pointer; 
+            padding: 0;
+        }
+        #thanhtoan:hover{
+            color: #0056b3;
+        }
+        .back{
+            color: #f1f4f8;
+            background-color: #007bff;
+            margin: 10px;
+            border-radius: 5px ;
+        }
+        .nav {
+            background-color: #343a40;
+            overflow: hidden;
+        }
+        .nav a {
+            float: left;
+            display: block;
+            color: white;
+            text-align: center;
+            padding: 14px 16px;
+            text-decoration: none;
+        }
+        .nav a:hover {
+            background-color: #ddd;
+            color: black;
         }
     </style>
 </head>
 <body>
     <div class="header">
-        <h1>Thư viện Đại học Công nghiệp</h1>
+        <h1>Thư viện Đại học Công nghiệp Hà Nội</h1>
         <div class="profile">
+            <img src="https://img.icons8.com/ios-filled/30/ffffff/user.png" alt="Profile">
             <span>Admin</span>
             <button onclick="logout()">Đăng xuất</button>
         </div>
     </div>
-    <button onclick="goBack()" style="margin: 20px;">Trở lại</button>
+    <div class="nav">
+        <a href="QuanLyPhieuMuon.html">Phiếu mượn</a>
+        <a href="QuanLyPhieuViPham.html">Phiếu vi phạm</a>
+        <a href="BaoTriSach.html">Sách</a>
+        <a href="QuanLyNguoiDung.html">Người dùng</a>
+    </div>
+    <button class="back" onclick="goBack()" style="margin: 20px;">Trở lại</button>
     <div class="table-container">
-        <h2>Quản lý phiếu vi phạm</h2>
-        <table>
+        <h2 style="text-align: center;">Quản lý phiếu vi phạm</h2>
+        <table id="violation">
             <thead>
                 <tr>
                     <th>Mã phiếu vi phạm</th>
@@ -153,31 +186,13 @@
 
     <script>
         function logout() {
+            localStorage.clear();
             alert("Đăng xuất thành công!");
         }
-
-        function openModal() {
-            document.getElementById("myModal").style.display = "block";
-        }
-
-        function closeModal() {
-            document.getElementById("myModal").style.display = "none";
-        }
-
-        function confirmPayment() {
-            alert("Thanh toán đã thành công!");
-            closeModal();
-        }
-
-        // Đóng modal khi nhấn ra ngoài
-        window.onclick = function(event) {
-            if (event.target == document.getElementById("myModal")) {
-                closeModal();
-            }
-        }
         function goBack() {
-        window.location.href ='TrangChu_ThuThu.html'; // Quay lại trang trước đó
+        window.location.href ='TrangChu_ThuThu.html';
     }
     </script>
+    <script src="./js/vilolation.js"></script>
 </body>
 </html>

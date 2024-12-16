@@ -301,15 +301,13 @@
 
     <script>
         function logout() {
-            localStorage.setItem('accountName', '');
-            localStorage.setItem('accountUsername', '');
+            localStorage.clear();
             alert("Đã đăng xuất!");
             window.location.href = 'login.html'
         }
     </script>
     <script>
         function openSearchList(){
-            console.log('aa');
             const keyword = document.getElementById('keyword').value;
             const editedKeyword = keyword.replace(/ /g, "_");
             localStorage.setItem('keyword', editedKeyword);
