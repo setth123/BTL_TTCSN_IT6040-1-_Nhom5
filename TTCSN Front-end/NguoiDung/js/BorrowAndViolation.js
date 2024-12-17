@@ -1,6 +1,6 @@
 async function displayBorrowList() {
     const maND = localStorage.getItem('accountName');
-    const response = await fetch('http://localhost:8080/phieu-muon/' + maND); // Thay 'url' bằng URL thật
+    const response = await fetch('http://localhost:8080/phieu-muon/' + maND);
     const datas = await response.json();
 
     const table = document.getElementById('borrow');
@@ -40,8 +40,45 @@ async function displayBorrowList() {
     }
 }
 
+async function getViPham() {
+    const maND = localStorage.getItem('accountName');
+    const response = await fetch('http://localhost:8080/phieu-vi-pham/' + maND);
+    const datas = await response.json();
 
+    const table = document.getElementById('violation');
+    
+    const tbody = table.getElementsByTagName('tbody')[0] || table.appendChild(document.createElement('tbody'));
+    tbody.innerHTML = '';
 
-document.addEventListener('DOMContentLoaded', function () {
-    displayBorrowList();
+    for (const [index, data] of datas.entries()) {
+        const row = tbody.insertRow();
+
+        const cellIndex = row.insertCell();
+        cellIndex.textContent = index + 1;
+
+        // Cột mã phiếu mượn
+        const cellmaVP = row.insertCell();
+        cellmaVP.textContent = data.maPhieuVP.trim();
+
+        // Cột tên sách
+        const celltenSach = row.insertCell();
+        celltenSach.textContent = data.phieuMuon.sach.tenSach;
+
+        // Cột thời hạn (định dạng lại ngày tháng)
+        const cellQuaHan = row.insertCell();
+        cellQuaHan.textContent = data.soNgayQuaHan;
+
+        // Cột số lượng mượn
+        const cellPhat = row.insertCell();
+        cellPhat.textContent = data.soTienPhat.toLocaleString();
+
+        // Cột trạng thái
+        const cellTrangThai = row.insertCell();
+        cellTrangThai.textContent = data.trangThai ? 'Đã thanh toán' : 'Chưa thanh toán';
+    }
+}
+
+document.addEventListener('DOMContentLoaded',async function () {
+    await displayBorrowList();
+    await getViPham();
 });

@@ -1,20 +1,28 @@
 package com.example.Server.controller;
 
+import java.util.List;
+import java.util.Optional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.example.Server.dto.LoginRequest;
+import com.example.Server.dto.RegisterRequest;
 import com.example.Server.entity.NguoiDung;
 import com.example.Server.repository.NguoiDungRepository;
 import com.example.Server.service.NguoiDungService;
 
 import jakarta.validation.Valid;
-
-import com.example.Server.dto.LoginRequest;
-import com.example.Server.dto.RegisterRequest;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
-import java.util.Optional;
 
 @CrossOrigin(origins = "http://127.0.0.1:5500")
 @RestController
@@ -75,7 +83,7 @@ public class NguoiDungController {
         Optional<NguoiDung> userOptional=ndr.findById(maNguoiDung);
         if(userOptional.isPresent()){
             NguoiDung user = userOptional.get();
-            user.setTrangThaiTK(Boolean.parseBoolean(state));
+            user.setTrangThaiTK(!Boolean.parseBoolean(state));
             ndr.save(user);
         }
         return searchUsers(null);
