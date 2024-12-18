@@ -46,7 +46,7 @@ function closeModal() {
 async function confirmPayment() {
     const maPhieuVP = localStorage.getItem('violationID');
     const state = localStorage.getItem('violationState');
-    const response = await fetch ('http://localhost:8080/phieu-vi-pham/' + maPhieuVP + state, {
+    const response = await fetch ('http://localhost:8080/phieu-vi-pham/' + maPhieuVP +'/'+ state, {
         method: 'PUT',
         headers: {
             'Content-Type': 'application/json',
